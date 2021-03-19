@@ -1,17 +1,6 @@
-# https://docs.brew.sh/Formula-Cookbook
-# https://github.com/blackfireio/homebrew-blackfire/blob/master/Abstract/abstract-blackfire-php-extension.rb
-# 
-# TODOs
-#  - handle igbinary dependency
-#  - handle PHP API versions
-
 class Relay < Formula
   desc "Next-generation caching layer for PHP"
   homepage "https://relaycache.com"
-  # license "BSD-2-Clause"
-  url "https://cachewerk.s3.amazonaws.com/mac/20200930-v0.3.0.tar.gz"
-  sha256 "127e74fd1342945480123ea1de82c7b5d16bd0c59cc96e468aa4aafa10f33a07"
-  head "https://cachewerk.s3.amazonaws.com/mac/20200930-develop.tar.gz"
 
   depends_on "php"
   depends_on "jemalloc"
@@ -23,11 +12,57 @@ class Relay < Formula
 
   bottle :unneeded
 
+  phpver = Utils.safe_popen_read("#{HOMEBREW_PREFIX}/bin/php-config", "--version").chomp.slice(0, 3)
+
+  stable do
+    url "https://cachewerk.s3.amazonaws.com/relay/relay-v0.3.0-php8.0-darwin-arm64.tar.gz"
+
+    resource "ext-relay" do
+      if Hardware::CPU.arm?
+        case phpver
+          when "8.0"
+            url "https://cachewerk.s3.amazonaws.com/relay/relay-v0.3.0-php8.0-darwin-arm64.tar.gz"
+          when "7.4"
+            url "https://cachewerk.s3.amazonaws.com/relay/relay-v0.3.0-php7.4-darwin-arm64.tar.gz"
+        end
+      else
+        case phpver
+          when "8.0"
+            url "https://cachewerk.s3.amazonaws.com/relay/relay-v0.3.0-php8.0-darwin-x86-64.tar.gz"
+          when "7.4"
+            url "https://cachewerk.s3.amazonaws.com/relay/relay-v0.3.0-php7.4-darwin-x86-64.tar.gz"
+        end
+      end
+    end
+  end
+
+  head do
+    url "https://cachewerk.s3.amazonaws.com/relay/relay-dev-php8.0-darwin-arm64.tar.gz"
+
+    resource "ext-relay" do
+      if Hardware::CPU.arm?
+        case phpver
+          when "8.0"
+            url "https://cachewerk.s3.amazonaws.com/relay/relay-dev-php8.0-darwin-arm64.tar.gz"
+          when "7.4"
+            url "https://cachewerk.s3.amazonaws.com/relay/relay-dev-php7.4-darwin-arm64.tar.gz"
+        end
+      else
+        case phpver
+          when "8.0"
+            url "https://cachewerk.s3.amazonaws.com/relay/relay-dev-php8.0-darwin-x86-64.tar.gz"
+          when "7.4"
+            url "https://cachewerk.s3.amazonaws.com/relay/relay-dev-php7.4-darwin-x86-64.tar.gz"
+        end
+      end
+    end
+  end
   def install
-    lib.install "relay.so"
+    lib.install resource("ext-relay")
 
     inreplace "relay.ini", "extension = relay.so", "extension = #{lib}/relay.so"
 
+    # creates `relay.ini.default` if `relay.ini` exists
     (etc/"relay").install "relay.ini"
 
     # set absolute path to extension
