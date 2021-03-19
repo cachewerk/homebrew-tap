@@ -12,21 +12,22 @@ class Relay < Formula
 
   bottle :unneeded
 
-  phpver = Utils.safe_popen_read("#{HOMEBREW_PREFIX}/bin/php-config", "--version").chomp.slice(0, 3)
+  php_ver = Utils.safe_popen_read("#{HOMEBREW_PREFIX}/bin/php-config", "--version").chomp.slice(0, 3)
 
   stable do
     url "https://cachewerk.s3.amazonaws.com/relay/relay-v0.3.0-php8.0-darwin-arm64.tar.gz"
+    version "v0.3.0"
 
     resource "ext-relay" do
       if Hardware::CPU.arm?
-        case phpver
+        case php_ver
           when "8.0"
             url "https://cachewerk.s3.amazonaws.com/relay/relay-v0.3.0-php8.0-darwin-arm64.tar.gz"
           when "7.4"
             url "https://cachewerk.s3.amazonaws.com/relay/relay-v0.3.0-php7.4-darwin-arm64.tar.gz"
         end
       else
-        case phpver
+        case php_ver
           when "8.0"
             url "https://cachewerk.s3.amazonaws.com/relay/relay-v0.3.0-php8.0-darwin-x86-64.tar.gz"
           when "7.4"
@@ -41,14 +42,14 @@ class Relay < Formula
 
     resource "ext-relay" do
       if Hardware::CPU.arm?
-        case phpver
+        case php_ver
           when "8.0"
             url "https://cachewerk.s3.amazonaws.com/relay/relay-dev-php8.0-darwin-arm64.tar.gz"
           when "7.4"
             url "https://cachewerk.s3.amazonaws.com/relay/relay-dev-php7.4-darwin-arm64.tar.gz"
         end
       else
-        case phpver
+        case php_ver
           when "8.0"
             url "https://cachewerk.s3.amazonaws.com/relay/relay-dev-php8.0-darwin-x86-64.tar.gz"
           when "7.4"
@@ -57,21 +58,38 @@ class Relay < Formula
       end
     end
   end
+
+  def conf_dir
+    Pathname(Utils.safe_popen_read("#{HOMEBREW_PREFIX}/bin/php-config", "--ini-dir").chomp)
+  end
+
   def install
-    lib.install resource("ext-relay")
-
-    inreplace "relay.ini", "extension = relay.so", "extension = #{lib}/relay.so"
-
-    # creates `relay.ini.default` if `relay.ini` exists
-    (etc/"relay").install "relay.ini"
+    resource("ext-relay").stage do
+      lib.install "relay.so"
+    end
 
     # set absolute path to extension
-    inreplace etc/"relay/relay.ini", /extension =.+$/, "extension = #{lib}/relay.so"
+    inreplace "relay.ini", "extension = relay.so", "extension = #{lib}/relay.so"
 
-    # determine `PHP_CONFIG_FILE_SCAN_DIR`
-    conf_dir = Pathname(Utils.safe_popen_read("#{HOMEBREW_PREFIX}/bin/php-config", "--ini-dir").chomp)
+    # install ini file to `etc/` (won’t overwrite)
+    (etc/"relay").install "relay.ini"
+
+    # upsert absolute path to extension if `relay.ini` already existed
+    inreplace etc/"relay/relay.ini", /extension =.+$/, "extension = #{lib}/relay.so"
 
     # create ini soft link if necessary
     ln_s etc/"relay/relay.ini", conf_dir/"ext-relay.ini" unless (conf_dir/"ext-relay.ini").exist?
+  end
+
+  def caveats
+    <<~EOS
+      The Relay extension for PHP was installed at:
+        #{lib}/relay.so
+
+      The configuration file was symlinked to:
+        #{conf_dir}/ext-relay.ini
+
+      Run `\033[32mphp --ri relay\033[0m` to ensure it’s working.
+    EOS
   end
 end
