@@ -1,9 +1,20 @@
-# Cachewerk Relay
+# Relay Homebrew repository
 
-## How do I install these formulae?
-`brew install cachewerk/relay/<formula>`
+Install the Relay extension for PHP using Homebrew:
 
-Or `brew tap cachewerk/relay` and then `brew install <formula>`.
+```bash
+brew tap cachewerk/relay
+brew install relay
+```
 
-## Documentation
-`brew help`, `man brew` or check [Homebrew's documentation](https://docs.brew.sh).
+Or alternatively:
+
+```bash
+brew install cachewerk/relay/relay
+```
+
+## Links
+
+- [Documentation](https://relaycache.com/docs)
+- [Twitter](https://twitter.com/RelayCache)
+- [Discussions](https://github.com/cachewerk/relay/discussions)
