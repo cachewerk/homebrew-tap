@@ -74,15 +74,4 @@ class Relay < Formula
     # create ini soft link if necessary
     ln_s etc/"relay/relay.ini", conf_dir/"ext-relay.ini" unless (conf_dir/"ext-relay.ini").exist?
   end
-
-  def caveats
-    <<~EOS
-      etc/relay/relay.ini was added and symlinked to 
-      RUN TEST IN `install` TO ENSURE IT'S WORKING
-
-      php --ri relay
-
-      `Extension 'relay' not present.`
-    EOS
-  end
 end
