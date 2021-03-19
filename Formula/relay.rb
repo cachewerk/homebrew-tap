@@ -64,6 +64,16 @@ class Relay < Formula
   end
 
   def install
+    extensions = Utils.safe_popen_read("#{HOMEBREW_PREFIX}/bin/php", "-m")
+
+    required = ["json", "igbinary", "msgpack"]
+
+    required.each { |extension|
+      unless extensions.match(/^#{extension}/)
+        raise "Relay requires the `#{extension}` extension. Install it using `\033[32mpecl install #{extension}\033[0m`."
+      end
+    }
+
     resource("ext-relay").stage do
       lib.install "relay.so"
     end
