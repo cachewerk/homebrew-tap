@@ -18,3 +18,11 @@ brew install cachewerk/relay/relay
 - [Documentation](https://relaycache.com/docs)
 - [Twitter](https://twitter.com/RelayCache)
 - [Discussions](https://github.com/cachewerk/relay/discussions)
+
+## Development
+
+Check the formula syntax before committing.
+
+```bash
+brew test-bot --tap cachewerk/relay --only-tap-syntax
+```
