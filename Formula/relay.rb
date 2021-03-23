@@ -15,7 +15,7 @@ class Relay < Formula
   php_ver = Utils.safe_popen_read("#{HOMEBREW_PREFIX}/bin/php-config", "--version").chomp.slice(0, 3)
 
   stable do
-    url "https://github.com/cachewerk/relay.git", :tag => "v0.3.0",
+    url "https://github.com/cachewerk/relay.git", tag: "v0.3.0"
 
     resource "ext-relay" do
       if Hardware::CPU.arm?
@@ -41,7 +41,7 @@ class Relay < Formula
   end
 
   head do
-    url "https://github.com/cachewerk/relay.git", :branch => "main"
+    url "https://github.com/cachewerk/relay.git", branch: "main"
 
     resource "ext-relay" do
       if Hardware::CPU.arm?
