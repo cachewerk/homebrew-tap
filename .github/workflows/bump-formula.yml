@@ -7,9 +7,9 @@ on:
 
 jobs:
 
-  bump-formula:
+  bump-stable:
 
-    name: Bump formula
+    name: Bump stable formula
     runs-on: ubuntu-20.04
 
     steps:
@@ -18,3 +18,25 @@ jobs:
         run: echo "$GITHUB_CONTEXT"
         env:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
+
+      - name: Fetch public release
+        id: release
+        uses: octokit/request-action@v2.x
+        with:
+          route: GET /repos/cachewerk/relay-public-dummy/releases/tags/{tag_name}
+          tag_name: ${{ github.event.client_payload.tag }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN_GH }}
+
+      - name: Download release assets
+        env:
+          RELEASE: ${{ steps.release.outputs.data }}
+        run: |
+          while IFS= read -r asset; do
+            curl -sS --fail -o $(echo $asset | jq -r '.name') \
+              --location $(echo $asset | jq -r '.url') \
+              --header "Accept: application/octet-stream" \
+              --header "Authorization: Bearer ${{ secrets.TOKEN_GH }}"
+          done < <(echo $RELEASE | jq -c '.assets[]')
+          ls -R
+          du -a .
