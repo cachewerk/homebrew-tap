@@ -24,5 +24,5 @@ brew install cachewerk/relay/relay
 Check the formula syntax before committing.
 
 ```bash
-brew test-bot --tap cachewerk/relay --only-tap-syntax
+brew style cachewerk/relay
 ```
