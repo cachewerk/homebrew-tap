@@ -11,20 +11,20 @@ class Relay < Formula
       if Hardware::CPU.arm?
         case php_ver
         when "8.0" # stable: php8.0-darwin-arm64
-          url "https://cachewerk.s3.amazonaws.com/relay/v0.3.0/relay-v0.3.0-php8.0-darwin-arm64.tar.gz"
-          sha256 "..."
+          url "https://github.com/cachewerk/relay-public-dummy/releases/download/v0.0.55/relay-v0.0.55-php8.0-darwin-arm64.tar.gz"
+          sha256 "23c37e93bb1fa813601b77455804e3ff9fcee57ffe751d60fc7a778b3ae75541"
         when "7.4" # stable: php7.4-darwin-arm64
-          url "https://cachewerk.s3.amazonaws.com/relay/v0.3.0/relay-v0.3.0-php7.4-darwin-arm64.tar.gz"
-          sha256 "..."
+          url "https://github.com/cachewerk/relay-public-dummy/releases/download/v0.0.55/relay-v0.0.55-php7.4-darwin-arm64.tar.gz"
+          sha256 "a5e44eb0509785d748886b5d87c078b0b7ba0c9e35524432f66719737c660739"
         end
       else
         case php_ver
         when "8.0" # stable: php8.0-darwin-x86-64
-          url "https://cachewerk.s3.amazonaws.com/relay/v0.3.0/relay-v0.3.0-php8.0-darwin-x86-64.tar.gz"
-          sha256 "..."
+          url "https://github.com/cachewerk/relay-public-dummy/releases/download/v0.0.55/relay-v0.0.55-php8.0-darwin-x86-64.tar.gz"
+          sha256 "23c37e93bb1fa813601b77455804e3ff9fcee57ffe751d60fc7a778b3ae75541"
         when "7.4" # stable: php7.4-darwin-x86-64
-          url "https://cachewerk.s3.amazonaws.com/relay/v0.3.0/relay-v0.3.0-php7.4-darwin-x86-64.tar.gz"
-          sha256 "..."
+          url "https://github.com/cachewerk/relay-public-dummy/releases/download/v0.0.55/relay-v0.0.55-php7.4-darwin-x86-64.tar.gz"
+          sha256 "a5e44eb0509785d748886b5d87c078b0b7ba0c9e35524432f66719737c660739"
         end
       end
     end
