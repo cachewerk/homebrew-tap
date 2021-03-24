@@ -45,7 +45,7 @@ jobs:
 
       - name: Update formula
         run: |
-          for f in *; do
+          for f in *.tar.gz; do
             HASH=$(sha256sum $f)
             echo $HASH
             MARKER=$(echo $f | cut -d - -f 3- | gsed 's/.tar.gz//')
