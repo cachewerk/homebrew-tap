@@ -11,19 +11,19 @@ class Relay < Formula
       if Hardware::CPU.arm?
         case php_ver
         when "8.0"
-          url "https://cachewerk.s3.amazonaws.com/relay/relay-v0.3.0-php8.0-darwin-arm64.tar.gz"
+          url "https://cachewerk.s3.amazonaws.com/relay/v0.3.0/relay-v0.3.0-php8.0-darwin-arm64.tar.gz"
           sha256 "..."
         when "7.4"
-          url "https://cachewerk.s3.amazonaws.com/relay/relay-v0.3.0-php7.4-darwin-arm64.tar.gz"
+          url "https://cachewerk.s3.amazonaws.com/relay/v0.3.0/relay-v0.3.0-php7.4-darwin-arm64.tar.gz"
           sha256 "..."
         end
       else
         case php_ver
         when "8.0"
-          url "https://cachewerk.s3.amazonaws.com/relay/relay-v0.3.0-php8.0-darwin-x86-64.tar.gz"
+          url "https://cachewerk.s3.amazonaws.com/relay/v0.3.0/relay-v0.3.0-php8.0-darwin-x86-64.tar.gz"
           sha256 "..."
         when "7.4"
-          url "https://cachewerk.s3.amazonaws.com/relay/relay-v0.3.0-php7.4-darwin-x86-64.tar.gz"
+          url "https://cachewerk.s3.amazonaws.com/relay/v0.3.0/relay-v0.3.0-php7.4-darwin-x86-64.tar.gz"
           sha256 "..."
         end
       end
