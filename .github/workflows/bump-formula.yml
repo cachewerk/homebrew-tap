@@ -60,5 +60,5 @@ jobs:
           TAG_NAME: ${{ github.event.client_payload.tag }}
         run: |
           git add Formula/relay.rb
-          git commit -m "Bump stable to $TAG_NAME"
+          git commit -m "Bump stable to $TAG_NAME" --author="github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
           git push -u origin pr/stable-$TAG_NAME
