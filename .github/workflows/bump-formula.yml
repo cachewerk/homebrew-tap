@@ -46,11 +46,11 @@ jobs:
       - name: Update formula
         run: |
           for f in *.tar.gz; do
-            HASH=$(sha256sum $f)
+            HASH=$(sha256sum $f | head -c 64)
             echo $HASH
             MARKER=$(echo $f | cut -d - -f 3- | sed 's/.tar.gz//')
             echo $MARKER
-            sed -i "/.*# $MARKER/!b;n;curl \"$f\"" Formula/relay.rb
-            sed -i "/.*# $MARKER/!b;n;n;csha256 \"$HASH\"" Formula/relay.rb
+            sed -i "/.*# stable: $MARKER/!b;n;curl \"$f\"" Formula/relay.rb
+            sed -i "/.*# stable: $MARKER/!b;n;n;csha256 \"$HASH\"" Formula/relay.rb
           done
           cat Formula/relay.rb
