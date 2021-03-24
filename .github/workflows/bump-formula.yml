@@ -51,8 +51,14 @@ jobs:
             HASH=$(sha256sum $f | head -c 64)
             MARKER=$(echo $f | cut -d - -f 3- | sed 's/.tar.gz//')
             URL=$(echo $RELEASE | jq -r ".assets[] | select(.name==\"$f\") | .browser_download_url")
-            SPACE="\ \ \ \ \ \ \ \ \ \ "
-            sed -i "/.*# stable: $MARKER/!b;n;c$SPACEurl \"$URL\"" Formula/relay.rb
+            sed -i "/.*# stable: $MARKER/!b;n;c\ \ \ \ \ \ \ \ \ \ url \"$URL\"" Formula/relay.rb
             sed -i "/.*# stable: $MARKER/!b;n;n;c\ \ \ \ \ \ \ \ \ \ sha256 \"$HASH\"" Formula/relay.rb
           done
-          cat Formula/relay.rb
+
+      - name: Commit changes
+        env:
+          TAG_NAME: ${{ github.event.client_payload.tag }}
+        run: |
+          git add Formula/relay.rb
+          git commit -m "Bump stable to $TAG_NAME"
+          git push -u origin pr/stable-$TAG_NAME
