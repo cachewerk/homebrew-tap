@@ -40,7 +40,7 @@ jobs:
               --location $(echo $asset | jq -r '.url') \
               --header "Accept: application/octet-stream" \
               --header "Authorization: Bearer ${{ secrets.TOKEN_GH }}"
-          done < <(echo $RELEASE | jq -c '.assets[]' | select(.name | contains("darwin")))
+          done < <(echo $RELEASE | jq -c '.assets[] | select(.name | contains("darwin"))')
           ls -R
 
       - name: Update formula
