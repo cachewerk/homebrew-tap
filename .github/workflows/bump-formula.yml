@@ -48,9 +48,9 @@ jobs:
           for f in *.tar.gz; do
             HASH=$(sha256sum $f)
             echo $HASH
-            MARKER=$(echo $f | cut -d - -f 3- | gsed 's/.tar.gz//')
+            MARKER=$(echo $f | cut -d - -f 3- | sed 's/.tar.gz//')
             echo $MARKER
-            sed "/.*# $MARKER/!b;n;curl \"$f\"" Formula/relay.rb
-            sed "/.*# $MARKER/!b;n;n;csha256 \"$HASH\"" Formula/relay.rb
+            sed -i "/.*# $MARKER/!b;n;curl \"$f\"" Formula/relay.rb
+            sed -i "/.*# $MARKER/!b;n;n;csha256 \"$HASH\"" Formula/relay.rb
           done
           cat Formula/relay.rb
