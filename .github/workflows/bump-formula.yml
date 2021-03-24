@@ -44,13 +44,14 @@ jobs:
           ls -R
 
       - name: Update formula
+        env:
+          RELEASE: ${{ steps.release.outputs.data }}
         run: |
           for f in *.tar.gz; do
             HASH=$(sha256sum $f | head -c 64)
-            echo $HASH
             MARKER=$(echo $f | cut -d - -f 3- | sed 's/.tar.gz//')
-            echo $MARKER
-            sed -i "/.*# stable: $MARKER/!b;n;curl \"$f\"" Formula/relay.rb
-            sed -i "/.*# stable: $MARKER/!b;n;n;csha256 \"$HASH\"" Formula/relay.rb
+            URL=$(echo $RELEASE | jq -r ".assets[] | select(.name==\"$NAME\") | .browser_download_url")
+            sed -i "/.*# stable: $MARKER/!b;n;c          url \"$URL\"" Formula/relay.rb
+            sed -i "/.*# stable: $MARKER/!b;n;n;c          sha256 \"$HASH\"" Formula/relay.rb
           done
           cat Formula/relay.rb
