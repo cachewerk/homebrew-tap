@@ -62,7 +62,7 @@ jobs:
           BRANCH=pr/stable-$TAG_NAME
           git config --local user.name "github-actions[bot]"
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git checkout --track -b $BRANCH origin/BRANCH
+          git checkout -b $BRANCH
           git add Formula/relay.rb
           git commit -m "Bump stable to $TAG_NAME"
-          git push
+          git push -u origin $BRANCH
