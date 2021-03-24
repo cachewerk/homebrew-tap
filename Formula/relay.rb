@@ -10,19 +10,19 @@ class Relay < Formula
     resource "ext-relay" do
       if Hardware::CPU.arm?
         case php_ver
-        when "8.0" # stable-8.0-arm64
+        when "8.0" # stable: php8.0-darwin-arm64
           url "https://cachewerk.s3.amazonaws.com/relay/v0.3.0/relay-v0.3.0-php8.0-darwin-arm64.tar.gz"
           sha256 "..."
-        when "7.4" # stable-7.4-arm64
+        when "7.4" # stable: php7.4-darwin-arm64
           url "https://cachewerk.s3.amazonaws.com/relay/v0.3.0/relay-v0.3.0-php7.4-darwin-arm64.tar.gz"
           sha256 "..."
         end
       else
         case php_ver
-        when "8.0" # stable-8.0-x86_64
+        when "8.0" # stable: php8.0-darwin-x86-64
           url "https://cachewerk.s3.amazonaws.com/relay/v0.3.0/relay-v0.3.0-php8.0-darwin-x86-64.tar.gz"
           sha256 "..."
-        when "7.4" # stable-7.4-x86_64
+        when "7.4" # stable: php7.4-darwin-x86-64
           url "https://cachewerk.s3.amazonaws.com/relay/v0.3.0/relay-v0.3.0-php7.4-darwin-x86-64.tar.gz"
           sha256 "..."
         end
@@ -36,16 +36,16 @@ class Relay < Formula
     resource "ext-relay" do
       if Hardware::CPU.arm?
         case php_ver
-        when "8.0"
+        when "8.0" # head: php8.0-darwin-arm64
           url "https://cachewerk.s3.amazonaws.com/relay/relay-dev-php8.0-darwin-arm64.tar.gz"
-        when "7.4"
+        when "7.4" # head: php7.4-darwin-arm64
           url "https://cachewerk.s3.amazonaws.com/relay/relay-dev-php7.4-darwin-arm64.tar.gz"
         end
       else
         case php_ver
-        when "8.0"
+        when "8.0" # head: php8.0-darwin-x86-64
           url "https://cachewerk.s3.amazonaws.com/relay/relay-dev-php8.0-darwin-x86-64.tar.gz"
-        when "7.4"
+        when "7.4" # head: php7.4-darwin-x86-64
           url "https://cachewerk.s3.amazonaws.com/relay/relay-dev-php7.4-darwin-x86-64.tar.gz"
         end
       end
