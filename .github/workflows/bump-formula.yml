@@ -19,6 +19,9 @@ jobs:
         env:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
 
+      - name: Checkout code
+        uses: actions/checkout@v2
+
       - name: Fetch public release
         id: release
         uses: octokit/request-action@v2.x
@@ -37,6 +40,17 @@ jobs:
               --location $(echo $asset | jq -r '.url') \
               --header "Accept: application/octet-stream" \
               --header "Authorization: Bearer ${{ secrets.TOKEN_GH }}"
-          done < <(echo $RELEASE | jq -c '.assets[]')
+          done < <(echo $RELEASE | jq -c '.assets[]' | select(.name | contains("darwin")))
           ls -R
-          du -a .
+
+      - name: Update formula
+        run: |
+          for f in *; do
+            HASH=$(sha256sum $f)
+            echo $HASH
+            MARKER=$(echo $f | cut -d - -f 3- | gsed 's/.tar.gz//')
+            echo $MARKER
+            sed "/.*# $MARKER/!b;n;curl \"$f\"" Formula/relay.rb
+            sed "/.*# $MARKER/!b;n;n;csha256 \"$HASH\"" Formula/relay.rb
+          done
+          cat Formula/relay.rb
