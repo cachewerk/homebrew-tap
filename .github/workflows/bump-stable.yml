@@ -1,0 +1,81 @@
+name: Bump stable formula
+
+on:
+  repository_dispatch:
+    types:
+      - bump-relay-stable
+
+jobs:
+
+  bump-relay-stable:
+
+    name: Bump stable Relay formula
+    runs-on: macos-11.0
+
+    if: github.event.action == 'bump-relay-stable'
+
+    steps:
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install GNU sed
+        run: brew install gnu-sed
+
+      - name: Download release assets
+        env:
+          RELEASE: ${{ toJson(github.event.client_payload.release) }}
+        run: |
+          while IFS= read -r asset; do
+            NAME=$(echo $asset | jq -r '.name')
+            URL=$(echo $asset | jq -r '.url')
+            echo "Downloading $NAME from $URL"
+            curl -sS --fail -o $NAME --location $URL \
+              --header "Accept: application/octet-stream" \
+              --header "Authorization: Bearer ${{ secrets.G1THUB_ORG_TOKEN }}"
+          done < <(echo $RELEASE | jq -c '.assets[] | select(.name | contains("darwin"))')
+
+      - name: Update formula
+        env:
+          RELEASE: ${{ toJson(github.event.client_payload.release) }}
+        run: |
+          TAG_NAME=$(echo $RELEASE | jq -r '.tag_name')
+          echo "Updating stable tag to $TAG_NAME"
+          gsed -i "s/, tag: \"v.*\"/, tag: \"$TAG_NAME\"/" Formula/relay.rb
+          for f in *.tar.gz; do
+            HASH=$(shasum --algorithm 256 $f | head -c 64)
+            MARKER=$(echo $f | cut -d - -f 3- | gsed 's/.tar.gz//')
+            URL=$(echo $RELEASE | jq -r ".assets[] | select(.name==\"$f\") | .browser_download_url")
+            echo "Setting URL for stable $MARKER marker to $URL"
+            gsed -i "/.*# stable: $MARKER/!b;n;c\ \ \ \ \ \ \ \ \ \ url \"$URL\"" Formula/relay.rb
+            echo "Setting checksum for stable $MARKER marker to $HASH"
+            gsed -i "/.*# stable: $MARKER/!b;n;n;c\ \ \ \ \ \ \ \ \ \ sha256 \"$HASH\"" Formula/relay.rb
+          done
+
+      - name: Check formula style
+        run: brew style Formula/relay.rb
+
+      - name: Commit changes
+        env:
+          RELEASE: ${{ toJson(github.event.client_payload.release) }}
+        run: |
+          TAG_NAME=$(echo $RELEASE | jq -r '.tag_name')
+          BRANCH=pr/stable-$TAG_NAME
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          echo "Pushing changes to $BRANCH branch"
+          git checkout -b $BRANCH
+          git add Formula/relay.rb
+          git commit -m "Bump stable to $TAG_NAME"
+          git push -u origin $BRANCH
+
+      - name: Open pull request
+        uses: octokit/request-action@v2.x
+        with:
+          route: POST /repos/cachewerk/homebrew-tap/pulls
+          base: main
+          head: pr/stable-${{ github.event.client_payload.release.tag_name }}
+          title: Relay ${{ github.event.client_payload.release.tag_name }}
+          body: See https://github.com/cachewerk/relay/releases/tag/${{ github.event.client_payload.release.tag_name }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.G1THUB_ORG_TOKEN }}
