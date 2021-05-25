@@ -108,7 +108,7 @@ class Relay < Formula
       (etc/"relay").install "relay.ini"
 
       # upsert absolute path to extension if `relay.ini` already existed
-      inreplace etc/"relay/relay.ini", /extension =.+$/, "extension = #{lib}/relay.so"
+      inreplace etc/"relay/relay.ini", /extension\s*=.+$/, "extension = #{lib}/relay.so"
 
       # create ini soft link if necessary
       ln_s etc/"relay/relay.ini", conf_dir/"ext-relay.ini" unless (conf_dir/"ext-relay.ini").exist?
