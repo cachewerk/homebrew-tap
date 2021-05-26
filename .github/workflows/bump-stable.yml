@@ -41,19 +41,19 @@ jobs:
         run: |
           TAG_NAME=$(echo $RELEASE | jq -r '.tag_name')
           echo "Updating stable tag to $TAG_NAME"
-          gsed -i "s/, tag: \"v.*\"/, tag: \"$TAG_NAME\"/" Formula/relay.rb
+          gsed -i "s/, tag: \"v.*\"/, tag: \"$TAG_NAME\"/" Formula/*.rb
           for f in *.tar.gz; do
             HASH=$(shasum --algorithm 256 $f | head -c 64)
             MARKER=$(echo $f | cut -d - -f 3- | gsed 's/.tar.gz//')
             URL=$(echo $RELEASE | jq -r ".assets[] | select(.name==\"$f\") | .browser_download_url")
             echo "Setting URL for stable $MARKER marker to $URL"
-            gsed -i "/.*# stable: $MARKER/!b;n;c\ \ \ \ \ \ \ \ \ \ url \"$URL\"" Formula/relay.rb
+            gsed -i "/.*# stable: $MARKER/!b;n;c\ \ \ \ \ \ \ \ \ \ url \"$URL\"" Formula/*.rb
             echo "Setting checksum for stable $MARKER marker to $HASH"
-            gsed -i "/.*# stable: $MARKER/!b;n;n;c\ \ \ \ \ \ \ \ \ \ sha256 \"$HASH\"" Formula/relay.rb
+            gsed -i "/.*# stable: $MARKER/!b;n;n;c\ \ \ \ \ \ \ \ \ \ sha256 \"$HASH\"" Formula/*.rb
           done
 
       - name: Check formula style
-        run: brew style Formula/relay.rb
+        run: brew style Formula/*.rb
 
       - name: Commit changes
         env:
@@ -65,7 +65,7 @@ jobs:
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           echo "Pushing changes to $BRANCH branch"
           git checkout -b $BRANCH
-          git add Formula/relay.rb
+          git add Formula/*.rb
           git commit -m "Bump stable to $TAG_NAME"
           git push -u origin $BRANCH
 

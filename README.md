@@ -1,17 +1,24 @@
 # Relay Homebrew tap
 
-## Prerequisites
+Install the Relay extension for PHP using Homebrew.
 
-- PHP 7.4+ installed via Homebrew
-- The `igbinary` and `msgpack` extension
-
-## Installation
-
-Install the Relay extension for PHP using Homebrew:
+First, add the tap:
 
 ```bash
 brew tap cachewerk/tap
-brew install relay
+```
+
+Next, determine your PHP version using `php -v` and install the matching extension:
+
+```bash
+brew install relay      # PHP 8.0
+brew install relay@7.4  # PHP 7.4
+```
+
+When prompted to install any required extensions, do so using PECL:
+
+```bash
+pecl install msgpack igbinary
 ```
 
 ## Links

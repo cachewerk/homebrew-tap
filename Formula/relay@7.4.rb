@@ -1,6 +1,6 @@
 require "securerandom"
 
-class Relay < Formula
+class RelayAT74 < Formula
   desc "Next-generation caching layer for PHP"
   homepage "https://relaycache.com"
 
@@ -9,13 +9,13 @@ class Relay < Formula
 
     resource "ext-relay" do
       if Hardware::CPU.arm?
-        # stable: php8.0-darwin-arm64
-        url "https://cachewerk.s3.amazonaws.com/relay/v0.1.0/relay-v0.1.0-php8.0-darwin-arm64.tar.gz"
-        sha256 "74b2ce220837693c2d2e80b60cedc0df8ad0d039f97b7b0528009026594973be"
+        # stable: php7.4-darwin-arm64
+        url "https://cachewerk.s3.amazonaws.com/relay/v0.1.0/relay-v0.1.0-php7.4-darwin-arm64.tar.gz"
+        sha256 "e54326a195d86659c861ca72a208b909aa2ff268afa0f75fc19f9814ea6f59bc"
       else
-        # stable: php8.0-darwin-x86-64
-        url "https://cachewerk.s3.amazonaws.com/relay/v0.1.0/relay-v0.1.0-php8.0-darwin-x86-64.tar.gz"
-        sha256 "f3ceb8dfde3236a2d76b90e416e368d8bb108d422efaf030d33dce05cfb47218"
+        # stable: php7.4-darwin-x86-64
+        url "https://cachewerk.s3.amazonaws.com/relay/v0.1.0/relay-v0.1.0-php7.4-darwin-x86-64.tar.gz"
+        sha256 "03b1e39b2535fe78a601d13593137dd17499dcf1cef5d823fa4856b344cf390a"
       end
     end
   end
@@ -25,11 +25,11 @@ class Relay < Formula
 
     resource "ext-relay" do
       if Hardware::CPU.arm?
-        # head: php8.0-darwin-arm64
-        url "https://cachewerk.s3.amazonaws.com/relay/develop/relay-dev-php8.0-darwin-arm64.tar.gz"
+        # head: php7.4-darwin-arm64
+        url "https://cachewerk.s3.amazonaws.com/relay/develop/relay-dev-php7.4-darwin-arm64.tar.gz"
       else
-        # head: php8.0-darwin-x86-64
-        url "https://cachewerk.s3.amazonaws.com/relay/develop/relay-dev-php8.0-darwin-x86-64.tar.gz"
+        # head: php7.4-darwin-x86-64
+        url "https://cachewerk.s3.amazonaws.com/relay/develop/relay-dev-php7.4-darwin-x86-64.tar.gz"
       end
     end
   end
@@ -43,10 +43,10 @@ class Relay < Formula
   # depends_on "lz4"
   # depends_on "zstd"
   depends_on "openssl"
-  depends_on "php"
+  depends_on "php@7.4"
 
   def conf_dir
-    Pathname(Utils.safe_popen_read((Formula["php"].opt_bin/"php-config").to_s, "--ini-dir").chomp)
+    Pathname(Utils.safe_popen_read((Formula["php@7.4"].opt_bin/"php-config").to_s, "--ini-dir").chomp)
   end
 
   def install
