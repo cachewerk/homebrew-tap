@@ -14,19 +14,19 @@ class Relay < Formula
         case php_ver
         when "8.0" # stable: php8.0-darwin-arm64
           url "https://cachewerk.s3.amazonaws.com/relay/v0.1.0/relay-v0.1.0-php8.0-darwin-arm64.tar.gz"
-          sha256 "..."
+          sha256 "74b2ce220837693c2d2e80b60cedc0df8ad0d039f97b7b0528009026594973be"
         when "7.4" # stable: php7.4-darwin-arm64
           url "https://cachewerk.s3.amazonaws.com/relay/v0.1.0/relay-v0.1.0-php7.4-darwin-arm64.tar.gz"
-          sha256 "..."
+          sha256 "e54326a195d86659c861ca72a208b909aa2ff268afa0f75fc19f9814ea6f59bc"
         end
       else
         case php_ver
         when "8.0" # stable: php8.0-darwin-x86-64
           url "https://cachewerk.s3.amazonaws.com/relay/v0.1.0/relay-v0.1.0-php8.0-darwin-x86-64.tar.gz"
-          sha256 "..."
+          sha256 "f3ceb8dfde3236a2d76b90e416e368d8bb108d422efaf030d33dce05cfb47218"
         when "7.4" # stable: php7.4-darwin-x86-64
           url "https://cachewerk.s3.amazonaws.com/relay/v0.1.0/relay-v0.1.0-php7.4-darwin-x86-64.tar.gz"
-          sha256 "..."
+          sha256 "03b1e39b2535fe78a601d13593137dd17499dcf1cef5d823fa4856b344cf390a"
         end
       end
     end
