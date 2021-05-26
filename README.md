@@ -1,4 +1,4 @@
-# Relay Homebrew repository
+# Relay Homebrew tap
 
 Install the Relay extension for PHP using Homebrew:
 
