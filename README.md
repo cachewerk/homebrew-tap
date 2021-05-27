@@ -31,6 +31,8 @@ pecl install msgpack igbinary
 
 ```php
 brew uninstall relay
+# brew uninstall relay@7.4
+
 rm -rf /opt/homebrew/etc/relay
 rm $(php-config --ini-dir)/ext-relay.ini
 ```
