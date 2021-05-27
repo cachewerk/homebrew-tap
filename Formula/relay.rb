@@ -50,8 +50,8 @@ class Relay < Formula
   end
 
   def install
-    phpbin = (Formula["php"].opt_bin/"php").to_s
-    extensions = Utils.safe_popen_read(phpbin, "-m")
+    php = (Formula["php"].opt_bin/"php").to_s
+    extensions = Utils.safe_popen_read(php, "-m")
 
     ["json", "igbinary", "msgpack"].each do |name|
       unless /^#{name}/.match?(extensions)
@@ -75,7 +75,7 @@ class Relay < Formula
         system "install_name_tool",
           "-change",
           `otool -L relay.so | grep #{link} | awk '{print $1}'`.chomp,
-          `otool -L #{phpbin} | grep #{link} | awk '{print $1}'`.chomp,
+          `otool -L #{php} | grep #{link} | awk '{print $1}'`.chomp,
           "relay.so"
       end
 
