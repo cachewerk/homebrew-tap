@@ -27,6 +27,14 @@ pecl install msgpack igbinary
 - [Twitter](https://twitter.com/RelayCache)
 - [Discussions](https://github.com/cachewerk/relay/discussions)
 
+## Uninstall
+
+```php
+brew uninstall relay
+rm -rf /opt/homebrew/etc/relay
+rm $(php-config --ini-dir)/ext-relay.ini
+```
+
 ## Development
 
 Check the formula syntax before committing.
