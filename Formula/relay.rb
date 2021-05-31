@@ -61,6 +61,7 @@ class Relay < Formula
 
     resource("ext-relay").stage do
       mv "relay-static-notls.so", "relay.so"
+      chmod 0644, "relay.so"
 
       # inject UUID
       ENV["LC_ALL"] = "C"
