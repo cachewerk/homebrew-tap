@@ -38,15 +38,14 @@ class RelayAT74 < Formula
 
   # depends_on "concurrencykit" # v0.7.1+
   # depends_on "hiredis" # v1.0.1+
-  # depends_on "jemalloc"
-  # depends_on "liblzf"
-  # depends_on "lz4"
-  # depends_on "zstd"
+  depends_on "libev"
+  depends_on "lz4"
   depends_on "openssl"
   depends_on "php@7.4"
+  depends_on "zstd"
 
   def conf_dir
-    Pathname(Utils.safe_popen_read((Formula["php@7.4"].opt_bin/"php-config").to_s, "--ini-dir").chomp)
+    Pathname(Utils.safe_popen_read(Formula["php@7.4"].opt_bin/"php-config", "--ini-dir").chomp)
   end
 
   def install
@@ -60,7 +59,7 @@ class RelayAT74 < Formula
     end
 
     resource("ext-relay").stage do
-      mv "relay-static-notls.so", "relay.so"
+      mv "relay-pkg.so", "relay.so"
       chmod 0644, "relay.so"
 
       # inject UUID
@@ -72,13 +71,27 @@ class RelayAT74 < Formula
         "relay.so"
 
       # relink dependencies
-      ["libssl", "libcrypto"].each do |link|
-        system "install_name_tool",
-          "-change",
-          `otool -L relay.so | grep #{link} | awk '{print $1}'`.chomp,
-          `otool -L #{php} | grep #{link} | awk '{print $1}'`.chomp,
-          "relay.so"
-      end
+      dylibs = MachO::Tools.dylibs("relay.so")
+
+      MachO::Tools.change_install_name("relay.so",
+        dylibs.grep(/libev/).first,
+        (Formula["libev"].opt_lib/"libev.dylib").to_s)
+
+      MachO::Tools.change_install_name("relay.so",
+        dylibs.grep(/libzstd/).first,
+        (Formula["zstd"].opt_lib/"libzstd.dylib").to_s)
+
+      MachO::Tools.change_install_name("relay.so",
+        dylibs.grep(/liblz4/).first,
+        (Formula["lz4"].opt_lib/"liblz4.dylib").to_s)
+
+      MachO::Tools.change_install_name("relay.so",
+        dylibs.grep(/libssl/).first,
+        (Formula["openssl"].opt_lib/"libssl.dylib").to_s)
+
+      MachO::Tools.change_install_name("relay.so",
+        dylibs.grep(/libcrypto/).first,
+        (Formula["openssl"].opt_lib/"libcrypto.dylib").to_s)
 
       # move extension file
       lib.install "relay.so"
