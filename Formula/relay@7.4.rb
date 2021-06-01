@@ -93,6 +93,9 @@ class RelayAT74 < Formula
         dylibs.grep(/libcrypto/).first,
         (Formula["openssl"].opt_lib/"libcrypto.dylib").to_s)
 
+      # Apply ad-hoc code signature
+      MachO.codesign!("relay.so") if Hardware::CPU.arm?
+
       # move extension file
       lib.install "relay.so"
 
