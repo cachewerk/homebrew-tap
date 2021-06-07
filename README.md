@@ -1,8 +1,6 @@
-# Relay Homebrew tap
+# Homebrew tap for Relay
 
-Install the Relay extension for PHP using Homebrew.
-
-First, add the tap:
+To install the Relay extension for PHP using Homebrew, first add the tap:
 
 ```bash
 brew tap cachewerk/tap
