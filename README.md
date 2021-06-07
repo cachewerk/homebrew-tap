@@ -15,10 +15,18 @@ brew install relay      # PHP 8.0
 brew install relay@7.4  # PHP 7.4
 ```
 
-When prompted to install any required extensions, do so using PECL:
+The installation might abort and you'll be prompted to install some PHP extensions that Relay requires. You can install them using PECL:
 
 ```bash
-pecl install msgpack igbinary
+pecl install msgpack
+pecl install igbinary
+```
+
+After the installation is completed, be sure to restart your PHP-FPM and web server services:
+
+```bash
+sudo brew services restart php
+sudo brew services restart nginx
 ```
 
 ## Links
