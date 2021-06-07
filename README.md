@@ -27,6 +27,25 @@ pecl install msgpack igbinary
 - [Twitter](https://twitter.com/RelayCache)
 - [Discussions](https://github.com/cachewerk/relay/discussions)
 
+## Known Issues
+
+### PHP forks crashing
+
+You might encounter PHP forks being killed when using `pcntl_fork()`. This is due to [macOS strict handling](https://www.wefearchange.org/2018/11/forkmacos.rst.html) of "unsafe" forks.
+
+To prevent PHP forks from being killed when running the CLI, add this to your bash profile: 
+
+```bash
+export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES into ~/.zshrc
+```
+
+To prevent PHP-FPM forks from being killed, run:
+
+```bash
+relay-fix-fpm
+sudo brew services restart php
+```
+
 ## Uninstall
 
 ```php
