@@ -53,7 +53,12 @@ jobs:
           done
 
       - name: Check formula style
-        run: brew style Formula/*.rb
+        run: |
+          brew style \
+            --fix \
+            --display-cop-names \
+            --except-cops=FormulaAudit/Comments,FormulaAuditStrict/TestPresent \
+            Formula/*.rb
 
       - name: Commit changes
         env:
