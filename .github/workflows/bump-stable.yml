@@ -47,9 +47,9 @@ jobs:
             MARKER=$(echo $f | cut -d - -f 3- | gsed 's/.tar.gz//')
             URL=$(echo $RELEASE | jq -r ".assets[] | select(.name==\"$f\") | .browser_download_url")
             echo "Setting URL for stable $MARKER marker to $URL"
-            gsed -i "/.*# stable: $MARKER/!b;n;c\ \ \ \ \ \ \ \ \ \ url \"$URL\"" Formula/*.rb
+            gsed -i "/.*# stable: $MARKER/!b;n;c\ \ \ \ \ \ \ \ url \"$URL\"" Formula/*.rb
             echo "Setting checksum for stable $MARKER marker to $HASH"
-            gsed -i "/.*# stable: $MARKER/!b;n;n;c\ \ \ \ \ \ \ \ \ \ sha256 \"$HASH\"" Formula/*.rb
+            gsed -i "/.*# stable: $MARKER/!b;n;n;c\ \ \ \ \ \ \ \ sha256 \"$HASH\"" Formula/*.rb
           done
 
       - name: Check formula style
