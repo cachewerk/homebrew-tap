@@ -37,7 +37,7 @@ class RelayAT74 < Formula
   bottle :unneeded
 
   # depends_on "concurrencykit" # v0.7.1+
-  # depends_on "hiredis" # v1.0.1+
+  depends_on "hiredis"
   depends_on "libev"
   depends_on "lz4"
   depends_on "openssl"
