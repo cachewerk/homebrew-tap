@@ -9,12 +9,12 @@ class Relay < Formula
 
     resource "ext-relay" do
       if Hardware::CPU.arm?
-        # stable: php8.1-darwin-arm64
-        url "https://github.com/cachewerk/relay/releases/download/v0.2.0/relay-v0.2.0-php8.1-darwin-arm64.tar.gz"
+        # stable: php8.0-darwin-arm64
+        url "https://github.com/cachewerk/relay/releases/download/v0.2.0/relay-v0.2.0-php8.0-darwin-arm64.tar.gz"
         sha256 "0ecd37b16049d0536c8b914bfdf70c05f397688be6edd2f11d20960f3307174f"
       else
-        # stable: php8.1-darwin-x86-64
-        url "https://github.com/cachewerk/relay/releases/download/v0.2.0/relay-v0.2.0-php8.1-darwin-x86-64.tar.gz"
+        # stable: php8.0-darwin-x86-64
+        url "https://github.com/cachewerk/relay/releases/download/v0.2.0/relay-v0.2.0-php8.0-darwin-x86-64.tar.gz"
         sha256 "4949aca8396c73f3238887723e6d50ce293055106c5de6cde05df9c8cfb5d72a"
       end
     end
@@ -25,11 +25,11 @@ class Relay < Formula
 
     resource "ext-relay" do
       if Hardware::CPU.arm?
-        # head: php8.1-darwin-arm64
-        url "https://cachewerk.s3.amazonaws.com/relay/develop/relay-dev-php8.1-darwin-arm64.tar.gz"
+        # head: php8.0-darwin-arm64
+        url "https://cachewerk.s3.amazonaws.com/relay/develop/relay-dev-php8.0-darwin-arm64.tar.gz"
       else
-        # head: php8.1-darwin-x86-64
-        url "https://cachewerk.s3.amazonaws.com/relay/develop/relay-dev-php8.1-darwin-x86-64.tar.gz"
+        # head: php8.0-darwin-x86-64
+        url "https://cachewerk.s3.amazonaws.com/relay/develop/relay-dev-php8.0-darwin-x86-64.tar.gz"
       end
     end
   end
