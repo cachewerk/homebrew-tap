@@ -104,6 +104,9 @@ class Relay < Formula
       # create ini soft link if necessary
       ln_s etc/"relay/relay.ini", conf_dir/"ext-relay.ini" unless (conf_dir/"ext-relay.ini").exist?
 
+      # delete `relay-fix-fpm` binary
+      (bin/"relay-fix-fpm").delete if (bin/"relay-fix-fpm").exist?
+
       # create `relay-fix-fpm` binary
       (bin/"relay-fix-fpm").write <<~SH
         #!/bin/bash
