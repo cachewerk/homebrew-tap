@@ -1,6 +1,6 @@
 require "securerandom"
 
-class Relay < Formula
+class RelayAT80 < Formula
   desc "Next-generation caching layer for PHP"
   homepage "https://relaycache.com"
 
