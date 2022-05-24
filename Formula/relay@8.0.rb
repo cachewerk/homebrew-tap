@@ -36,7 +36,6 @@ class RelayAT80 < Formula
 
   # depends_on "concurrencykit" # v0.7.1+
   depends_on "hiredis"
-  depends_on "libev"
   depends_on "lz4"
   depends_on "openssl"
   depends_on "php"
@@ -65,10 +64,6 @@ class RelayAT80 < Formula
 
       # relink dependencies
       dylibs = MachO::Tools.dylibs("relay.so")
-
-      MachO::Tools.change_install_name("relay.so",
-        dylibs.grep(/libev/).first,
-        (Formula["libev"].opt_lib/"libev.dylib").to_s)
 
       MachO::Tools.change_install_name("relay.so",
         dylibs.grep(/libzstd/).first,
