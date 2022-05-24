@@ -103,25 +103,6 @@ class RelayAT74 < Formula
 
       # create ini soft link if necessary
       ln_s etc/"relay/relay.ini", conf_dir/"ext-relay.ini" unless (conf_dir/"ext-relay.ini").exist?
-
-      # delete `relay-fix-fpm` binary
-      (bin/"relay-fix-fpm").delete if (bin/"relay-fix-fpm").exist?
-
-      # create `relay-fix-fpm` binary
-      (bin/"relay-fix-fpm").write <<~SH
-        #!/bin/bash
-
-        plist=#{Formula["php@7.4"].plist_path}
-        defaults read ${plist} EnvironmentVariables &> /dev/null
-
-        if [[ $? -ne 0 ]]; then
-          plutil -insert EnvironmentVariables -xml '<dict/>' ${plist}
-        fi
-
-        plutil -replace EnvironmentVariables.OBJC_DISABLE_INITIALIZE_FORK_SAFETY -string YES ${plist}
-
-        echo "Disabled fork safety for PHP-FPM."
-      SH
     end
   end
 
@@ -134,9 +115,6 @@ class RelayAT74 < Formula
         #{conf_dir}/ext-relay.ini
 
       Run `\033[32mphp --ri relay\033[0m` to ensure Relay is working.
-
-      Optionally, disable fork safety for PHP-FPM:
-        `\033[32mrelay-fix-fpm\033[0m`
 
       Finally, be sure to restart your PHP-FPM service:
         `\033[32mbrew services restart php\033[0m`
