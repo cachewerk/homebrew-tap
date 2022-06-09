@@ -26,10 +26,10 @@ class Relay < Formula
     resource "ext-relay" do
       if Hardware::CPU.arm?
         # head: php8.1-darwin-arm64
-        url "https://cachewerk.s3.amazonaws.com/relay/develop/relay-dev-php8.1-darwin-arm64.tar.gz"
+        url "https://cachewerk.s3.amazonaws.com/relay/dev/relay-dev-php8.1-darwin-arm64.tar.gz"
       else
         # head: php8.1-darwin-x86-64
-        url "https://cachewerk.s3.amazonaws.com/relay/develop/relay-dev-php8.1-darwin-x86-64.tar.gz"
+        url "https://cachewerk.s3.amazonaws.com/relay/dev/relay-dev-php8.1-darwin-x86-64.tar.gz"
       end
     end
   end
