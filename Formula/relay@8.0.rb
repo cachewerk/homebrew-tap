@@ -2,7 +2,7 @@ require "securerandom"
 
 class RelayAT80 < Formula
   desc "Next-generation caching layer for PHP"
-  homepage "https://relaycache.com"
+  homepage "https://relay.so"
 
   stable do
     url "https://github.com/cachewerk/relay.git", tag: "v0.4.3"

@@ -30,8 +30,8 @@ sudo brew services restart nginx
 
 ## Links
 
-- [Documentation](https://relaycache.com/docs)
-- [Twitter](https://twitter.com/RelayCache)
+- [Documentation](https://relay.so/docs)
+- [Twitter](https://twitter.com/RelayPHP)
 - [Discussions](https://github.com/cachewerk/relay/discussions)
 
 ## Uninstall
