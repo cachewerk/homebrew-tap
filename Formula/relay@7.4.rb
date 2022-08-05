@@ -5,17 +5,17 @@ class RelayAT74 < Formula
   homepage "https://relay.so"
 
   stable do
-    url "https://github.com/cachewerk/relay.git", tag: "v0.4.3"
+    url "https://github.com/cachewerk/relay.git", tag: "v0.4.4"
 
     resource "ext-relay" do
       if Hardware::CPU.arm?
         # stable: php7.4-darwin-arm64
-        url "https://github.com/cachewerk/relay/releases/download/v0.4.3/relay-v0.4.3-php7.4-darwin-arm64.tar.gz"
-        sha256 "5124eab81055a5e50c017e07467de6cb07276d268af556a5baa8defb20ab21db"
+        url "https://github.com/cachewerk/relay/releases/download/v0.4.4/relay-v0.4.4-php7.4-darwin-arm64.tar.gz"
+        sha256 "a09abe2075d9548504a6cffb9c82d72c0105db67c7b0d86dd8578de98603ea59"
       else
         # stable: php7.4-darwin-x86-64
-        url "https://github.com/cachewerk/relay/releases/download/v0.4.3/relay-v0.4.3-php7.4-darwin-x86-64.tar.gz"
-        sha256 "8060ce874551172f2d4b5151f5fa9956686085ca57b0b3ee2a15cb0030447716"
+        url "https://github.com/cachewerk/relay/releases/download/v0.4.4/relay-v0.4.4-php7.4-darwin-x86-64.tar.gz"
+        sha256 "aca0b706ee49921509a062af8c3463eead55fae404b03288b0bb247b0f733102"
       end
     end
   end
