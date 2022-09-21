@@ -57,7 +57,7 @@ jobs:
           brew style \
             --fix \
             --display-cop-names \
-            --except-cops=FormulaAudit/Comments,FormulaAuditStrict/TestPresent \
+            --except-cops=FormulaAudit/Comments,FormulaAudit/ComponentsOrder,FormulaAuditStrict/TestPresent \
             Formula/*.rb
 
       - name: Commit changes

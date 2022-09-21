@@ -4,6 +4,13 @@ class Relay < Formula
   desc "Next-generation caching layer for PHP"
   homepage "https://relay.so"
 
+  # depends_on "concurrencykit" # v0.7.1+
+  depends_on "hiredis"
+  depends_on "lz4"
+  depends_on "openssl"
+  depends_on "php"
+  depends_on "zstd"
+
   stable do
     url "https://github.com/cachewerk/relay.git", tag: "v0.4.5"
 
@@ -33,13 +40,6 @@ class Relay < Formula
       end
     end
   end
-
-  # depends_on "concurrencykit" # v0.7.1+
-  depends_on "hiredis"
-  depends_on "lz4"
-  depends_on "openssl"
-  depends_on "php"
-  depends_on "zstd"
 
   def conf_dir
     Pathname(Utils.safe_popen_read(Formula["php"].opt_bin/"php-config", "--ini-dir").chomp)
