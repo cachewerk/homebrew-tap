@@ -4,6 +4,8 @@ class RelayAT74 < Formula
   desc "Next-generation caching layer for PHP"
   homepage "https://relay.so"
 
+  keg_only :versioned_formula
+
   # depends_on "concurrencykit" # v0.7.1+
   depends_on "hiredis"
   depends_on "lz4"
