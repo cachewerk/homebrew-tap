@@ -93,13 +93,13 @@ class RelayAT74 < Formula
       inreplace "relay.ini", "extension = relay.so", "extension = #{lib}/relay.so"
 
       # install ini file to `etc/` (won't overwrite)
-      (etc/"relay").install "relay.ini"
+      (etc/"relay").install "relay@7.4.ini"
 
       # upsert absolute path to extension if `relay.ini` already existed
-      inreplace etc/"relay/relay.ini", /extension\s*=.+$/, "extension = #{lib}/relay.so"
+      inreplace etc/"relay/relay@7.4.ini", /extension\s*=.+$/, "extension = #{lib}/relay.so"
 
       # create ini soft link if necessary
-      ln_s etc/"relay/relay.ini", conf_dir/"ext-relay.ini" unless (conf_dir/"ext-relay.ini").exist?
+      ln_s etc/"relay/relay@7.4.ini", conf_dir/"ext-relay.ini" unless (conf_dir/"ext-relay.ini").exist?
     end
   end
 
