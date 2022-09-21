@@ -38,15 +38,15 @@ class RelayAT80 < Formula
   depends_on "hiredis"
   depends_on "lz4"
   depends_on "openssl"
-  depends_on "php"
+  depends_on "php@8.0"
   depends_on "zstd"
 
   def conf_dir
-    Pathname(Utils.safe_popen_read(Formula["php"].opt_bin/"php-config", "--ini-dir").chomp)
+    Pathname(Utils.safe_popen_read(Formula["php@8.0"].opt_bin/"php-config", "--ini-dir").chomp)
   end
 
   def install
-    php = (Formula["php"].opt_bin/"php").to_s
+    php = (Formula["php@8.0"].opt_bin/"php").to_s
     extensions = Utils.safe_popen_read(php, "-m")
 
     ["json", "igbinary", "msgpack"].each do |name|
