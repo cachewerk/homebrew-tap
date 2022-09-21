@@ -47,11 +47,13 @@ class RelayAT80 < Formula
 
   def install
     php = (Formula["php@8.0"].opt_bin/"php").to_s
+    pecl = (Formula["php@8.0"].opt_bin/"pecl").to_s
+
     extensions = Utils.safe_popen_read(php, "-m")
 
     ["json", "igbinary", "msgpack"].each do |name|
       unless /^#{name}/.match?(extensions)
-        raise "Relay requires the `#{name}` extension. Install it using `\033[32mpecl install #{name}\033[0m`."
+        raise "Relay requires the `#{name}` extension. Install it using `\033[32m#{pecl} install #{name}\033[0m`."
       end
     end
 
