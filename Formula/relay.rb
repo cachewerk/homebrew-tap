@@ -59,7 +59,10 @@ class Relay < Formula
       mv "relay-pkg.so", "relay.so"
       chmod 0644, "relay.so"
 
-      # inject UUID
+      # inject UUID into binary
+      `LC_ALL=C /usr/bin/sed -i '' s/00000000-0000-0000-0000-000000000000/#{SecureRandom.uuid}/ relay.so`
+
+      # inject UUID into old binary
       `LC_ALL=C /usr/bin/sed -i '' s/BIN:31415926-5358-9793-2384-626433832795/BIN:#{SecureRandom.uuid}/ relay.so`
 
       # relink dependencies

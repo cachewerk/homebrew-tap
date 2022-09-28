@@ -63,7 +63,10 @@ class RelayAT80 < Formula
       mv "relay-pkg.so", "relay.so"
       chmod 0644, "relay.so"
 
-      # inject UUID
+      # inject UUID into binary
+      `LC_ALL=C /usr/bin/sed -i '' s/00000000-0000-0000-0000-000000000000/#{SecureRandom.uuid}/ relay.so`
+
+      # inject UUID into old binary
       `LC_ALL=C /usr/bin/sed -i '' s/BIN:31415926-5358-9793-2384-626433832795/BIN:#{SecureRandom.uuid}/ relay.so`
 
       # relink dependencies
@@ -116,7 +119,7 @@ class RelayAT80 < Formula
       Run `\033[32mphp --ri relay\033[0m` to ensure Relay is working.
 
       Finally, be sure to restart your PHP-FPM service:
-        `\033[32mbrew services restart php\033[0m`
+        `\033[32mbrew services restart php@8.0\033[0m`
     EOS
   end
 end
