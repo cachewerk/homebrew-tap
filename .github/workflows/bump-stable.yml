@@ -9,7 +9,7 @@ jobs:
 
   bump-relay-stable:
 
-    name: Bump stable Relay formula
+    name: Bump stable formula
     runs-on: macos-11.0
 
     if: github.event.action == 'bump-relay-stable'
@@ -17,14 +17,23 @@ jobs:
     steps:
 
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Install GNU sed
         run: brew install gnu-sed
 
+      - name: Fetch public release
+        id: release
+        uses: octokit/request-action@v2.x
+        with:
+          route: GET /repos/cachewerk/relay/releases/tags/{tag_name}
+          tag_name: ${{ github.event.client_payload.tag }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.G1THUB_ORG_TOKEN }}
+
       - name: Download release assets
         env:
-          RELEASE: ${{ toJson(github.event.client_payload.release) }}
+          RELEASE: ${{ steps.release.outputs.data }}
         run: |
           while IFS= read -r asset; do
             NAME=$(echo $asset | jq -r '.name')
@@ -37,7 +46,7 @@ jobs:
 
       - name: Update formula
         env:
-          RELEASE: ${{ toJson(github.event.client_payload.release) }}
+          RELEASE: ${{ steps.release.outputs.data }}
         run: |
           TAG_NAME=$(echo $RELEASE | jq -r '.tag_name')
           echo "Updating stable tag to $TAG_NAME"
@@ -62,7 +71,7 @@ jobs:
 
       - name: Commit changes
         env:
-          RELEASE: ${{ toJson(github.event.client_payload.release) }}
+          RELEASE: ${{ steps.release.outputs.data }}
         run: |
           TAG_NAME=$(echo $RELEASE | jq -r '.tag_name')
           BRANCH=pr/stable-$TAG_NAME
@@ -79,8 +88,8 @@ jobs:
         with:
           route: POST /repos/cachewerk/homebrew-tap/pulls
           base: main
-          head: pr/stable-${{ github.event.client_payload.release.tag_name }}
-          title: Relay ${{ github.event.client_payload.release.tag_name }}
-          body: See https://github.com/cachewerk/relay/releases/tag/${{ github.event.client_payload.release.tag_name }}
+          head: pr/stable-${{ steps.release.outputs.data.tag_name }}
+          title: Relay ${{ steps.release.outputs.data.tag_name }}
+          body: See https://github.com/cachewerk/relay/releases/tag/${{ steps.release.outputs.data.tag_name }}
         env:
           GITHUB_TOKEN: ${{ secrets.G1THUB_ORG_TOKEN }}
