@@ -88,8 +88,8 @@ jobs:
         with:
           route: POST /repos/cachewerk/homebrew-tap/pulls
           base: main
-          head: pr/stable-${{ steps.release.outputs.data.tag_name }}
-          title: Relay ${{ steps.release.outputs.data.tag_name }}
-          body: See https://github.com/cachewerk/relay/releases/tag/${{ steps.release.outputs.data.tag_name }}
+          head: pr/stable-${{ github.event.client_payload.tag }}
+          title: Relay ${{ github.event.client_payload.tag }}
+          body: See https://github.com/cachewerk/relay/releases/tag/${{ github.event.client_payload.tag }}
         env:
           GITHUB_TOKEN: ${{ secrets.G1THUB_ORG_TOKEN }}
