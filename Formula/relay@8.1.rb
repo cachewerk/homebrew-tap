@@ -1,6 +1,6 @@
 require "securerandom"
 
-class Relay < Formula
+class RelayAT81 < Formula
   desc "Next-generation caching layer for PHP"
   homepage "https://relay.so"
 
@@ -16,13 +16,13 @@ class Relay < Formula
 
     resource "ext-relay" do
       if Hardware::CPU.arm?
-        # stable: php8.2-darwin-arm64
-        url "https://github.com/cachewerk/relay/releases/download/v0.5.1/relay-v0.5.1-php8.2-darwin-arm64.tar.gz"
-        sha256 "759c02449bccb1cc288c5a1f09799b119cde5703d11f4e21e80ee5a90a9d8890"
+        # stable: php8.1-darwin-arm64
+        url "https://github.com/cachewerk/relay/releases/download/v0.5.1/relay-v0.5.1-php8.1-darwin-arm64.tar.gz"
+        sha256 "19b0722bc80559524db8ce0fa2ecbf89ff5bb547f00db18c946f590e60d4a817"
       else
-        # stable: php8.2-darwin-x86-64
-        url "https://github.com/cachewerk/relay/releases/download/v0.5.1/relay-v0.5.1-php8.2-darwin-x86-64.tar.gz"
-        sha256 "a2a632f584596c4fb185e98305a7b1b0308d0b91c24ac8783b40d8ab72381a8e"
+        # stable: php8.1-darwin-x86-64
+        url "https://github.com/cachewerk/relay/releases/download/v0.5.1/relay-v0.5.1-php8.1-darwin-x86-64.tar.gz"
+        sha256 "41b7921f227f376ca538cad301a955ab372341f0e3ca249df6a7a9cf327479f9"
       end
     end
   end
@@ -32,11 +32,11 @@ class Relay < Formula
 
     resource "ext-relay" do
       if Hardware::CPU.arm?
-        # head: php8.2-darwin-arm64
-        url "https://cachewerk.s3.amazonaws.com/relay/dev/relay-dev-php8.2-darwin-arm64.tar.gz"
+        # head: php8.1-darwin-arm64
+        url "https://cachewerk.s3.amazonaws.com/relay/dev/relay-dev-php8.1-darwin-arm64.tar.gz"
       else
-        # head: php8.2-darwin-x86-64
-        url "https://cachewerk.s3.amazonaws.com/relay/dev/relay-dev-php8.2-darwin-x86-64.tar.gz"
+        # head: php8.1-darwin-x86-64
+        url "https://cachewerk.s3.amazonaws.com/relay/dev/relay-dev-php8.1-darwin-x86-64.tar.gz"
       end
     end
   end
