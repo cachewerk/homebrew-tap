@@ -8,7 +8,7 @@ class RelayAT81 < Formula
   depends_on "hiredis"
   depends_on "lz4"
   depends_on "openssl"
-  depends_on "php"
+  depends_on "php@8.1"
   depends_on "zstd"
 
   stable do
