@@ -4,6 +4,8 @@ class RelayAT81 < Formula
   desc "Next-generation caching layer for PHP"
   homepage "https://relay.so"
 
+  keg_only :versioned_formula
+
   # depends_on "concurrencykit" # v0.7.1+
   depends_on "hiredis"
   depends_on "lz4"
@@ -46,12 +48,14 @@ class RelayAT81 < Formula
   end
 
   def install
-    php = (Formula["php"].opt_bin/"php").to_s
+    php = (Formula["php@8.1"].opt_bin/"php").to_s
+    pecl = (Formula["php@8.1"].opt_bin/"pecl").to_s
+
     extensions = Utils.safe_popen_read(php, "-m")
 
     ["json", "igbinary", "msgpack"].each do |name|
       unless /^#{name}/.match?(extensions)
-        raise "Relay requires the `#{name}` extension. Install it using `\033[32mpecl install #{name}\033[0m`."
+        raise "Relay requires the `#{name}` extension. Install it using `\033[32m#{pecl} install #{name}\033[0m`."
       end
     end
 
@@ -92,13 +96,13 @@ class RelayAT81 < Formula
       inreplace "relay.ini", "extension = relay.so", "extension = #{lib}/relay.so"
 
       # install ini file to `etc/` (won't overwrite)
-      (etc/"relay").install "relay.ini"
+      (etc/"relay").install "relay.ini" => "relay@8.1.ini"
 
       # upsert absolute path to extension if `relay.ini` already existed
-      inreplace etc/"relay/relay.ini", /extension\s*=.+$/, "extension = #{lib}/relay.so"
+      inreplace etc/"relay/relay@8.1.ini", /extension\s*=.+$/, "extension = #{lib}/relay.so"
 
       # create ini soft link if necessary
-      ln_s etc/"relay/relay.ini", conf_dir/"ext-relay.ini" unless (conf_dir/"ext-relay.ini").exist?
+      ln_s etc/"relay/relay@8.1.ini", conf_dir/"ext-relay.ini" unless (conf_dir/"ext-relay.ini").exist?
     end
   end
 
@@ -113,7 +117,7 @@ class RelayAT81 < Formula
       Run `\033[32mphp --ri relay\033[0m` to ensure Relay is working.
 
       Finally, be sure to restart your PHP-FPM service:
-        `\033[32mbrew services restart php\033[0m`
+        `\033[32mbrew services restart php@8.1\033[0m`
     EOS
   end
 end
