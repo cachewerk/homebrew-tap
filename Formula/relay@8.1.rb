@@ -42,7 +42,7 @@ class RelayAT81 < Formula
   end
 
   def conf_dir
-    Pathname(Utils.safe_popen_read(Formula["php"].opt_bin/"php-config", "--ini-dir").chomp)
+    Pathname(Utils.safe_popen_read(Formula["php@8.1"].opt_bin/"php-config", "--ini-dir").chomp)
   end
 
   def install
