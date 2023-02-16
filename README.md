@@ -39,12 +39,12 @@ sudo brew services restart nginx
 
 ```php
 brew uninstall relay
+rm $(php-config --ini-dir)/ext-relay.ini
+
 # brew uninstall relay@8.1
+# rm $($(brew --prefix php@8.1)/bin/php-config --ini-dir)/ext-relay.ini
 
 rm -rf /opt/homebrew/etc/relay
-
-rm $(php-config --ini-dir)/ext-relay.ini
-# rm $($(brew --prefix php@8.1)/bin/php-config --ini-dir)/ext-relay.ini
 ```
 
 ## Development
