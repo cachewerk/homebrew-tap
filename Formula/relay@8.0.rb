@@ -14,17 +14,17 @@ class RelayAT80 < Formula
   depends_on "zstd"
 
   stable do
-    url "https://github.com/cachewerk/relay.git", tag: "v0.6.0"
+    url "https://github.com/cachewerk/relay.git", tag: "v0.6.1"
 
     resource "ext-relay" do
       if Hardware::CPU.arm?
         # stable: php8.0-darwin-arm64
-        url "https://github.com/cachewerk/relay/releases/download/v0.6.0/relay-v0.6.0-php8.0-darwin-arm64.tar.gz"
-        sha256 "421aa25de1e4b5fb526fa2f94573a75d2d440d4783284abcb8a858ab6518cf96"
+        url "https://github.com/cachewerk/relay/releases/download/v0.6.1/relay-v0.6.1-php8.0-darwin-arm64.tar.gz"
+        sha256 "898a5002cdc912f3b526c80da10be16b0a85640a37f20618bf891614eb4adac3"
       else
         # stable: php8.0-darwin-x86-64
-        url "https://github.com/cachewerk/relay/releases/download/v0.6.0/relay-v0.6.0-php8.0-darwin-x86-64.tar.gz"
-        sha256 "b7376ae662340a39cad4e9cfe10e54d53252e9ee5475b26652b5e6dfffd7a4c9"
+        url "https://github.com/cachewerk/relay/releases/download/v0.6.1/relay-v0.6.1-php8.0-darwin-x86-64.tar.gz"
+        sha256 "17dff09db7cd55b7f6d6ffa3515dc4de464abc0f1bfd6d27472ba97f0053dd5b"
       end
     end
   end
