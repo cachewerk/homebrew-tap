@@ -23,38 +23,36 @@ jobs:
         run: brew install gnu-sed
 
       - name: Fetch public release
-        id: release
         uses: octokit/request-action@v2.x
         with:
           route: GET /repos/cachewerk/relay/releases/tags/{tag_name}
           tag_name: ${{ github.event.client_payload.tag }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.G1THUB_ORG_TOKEN }}
 
       - name: Download release assets
         env:
-          RELEASE: ${{ steps.release.outputs.data }}
+          TAG_NAME: ${{ github.event.client_payload.tag }}
         run: |
-          while IFS= read -r asset; do
-            NAME=$(echo $asset | jq -r '.name')
-            URL=$(echo $asset | jq -r '.url')
-            echo "Downloading $NAME from $URL"
-            curl -sS --fail -o $NAME --location $URL \
-              --header "Accept: application/octet-stream" \
-              --header "Authorization: Bearer ${{ secrets.G1THUB_ORG_TOKEN }}"
-          done < <(echo $RELEASE | jq -c '.assets[] | select(.name | contains("darwin"))')
+          artifacts=$(
+            curl -sS --fail "https://builds.r2.relay.so/$TAG_NAME/artifacts.json" \
+            | jq '.[] | select(. | contains("darwin"))'
+          )
+
+          for artifact in $artifacts; do
+            URL="https://builds.r2.relay.so/$TAG_NAME/$artifact"
+            echo "Downloading $artifact from $URL"
+            curl -sS --fail -o $artifact --location $URL
+          done
 
       - name: Update formula
         env:
-          RELEASE: ${{ steps.release.outputs.data }}
+          TAG_NAME: ${{ github.event.client_payload.tag }}
         run: |
-          TAG_NAME=$(echo $RELEASE | jq -r '.tag_name')
           echo "Updating stable tag to $TAG_NAME"
           gsed -i "s/, tag: \"v.*\"/, tag: \"$TAG_NAME\"/" Formula/*.rb
           for f in *.tar.gz; do
             HASH=$(shasum --algorithm 256 $f | head -c 64)
             MARKER=$(echo $f | cut -d - -f 3- | gsed 's/.tar.gz//')
-            URL=$(echo $RELEASE | jq -r ".assets[] | select(.name==\"$f\") | .browser_download_url")
+            URL="https://builds.r2.relay.so/$TAG_NAME/$f"
             echo "Setting URL for stable $MARKER marker to $URL"
             gsed -i "/.*# stable: $MARKER/!b;n;c\ \ \ \ \ \ \ \ url \"$URL\"" Formula/*.rb
             echo "Setting checksum for stable $MARKER marker to $HASH"
@@ -71,9 +69,8 @@ jobs:
 
       - name: Commit changes
         env:
-          RELEASE: ${{ steps.release.outputs.data }}
+          TAG_NAME: ${{ github.event.client_payload.tag }}
         run: |
-          TAG_NAME=$(echo $RELEASE | jq -r '.tag_name')
           BRANCH=pr/stable-$TAG_NAME
           git config --local user.name "github-actions[bot]"
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -91,5 +88,3 @@ jobs:
           head: pr/stable-${{ github.event.client_payload.tag }}
           title: Relay ${{ github.event.client_payload.tag }}
           body: See https://github.com/cachewerk/relay/releases/tag/${{ github.event.client_payload.tag }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.G1THUB_ORG_TOKEN }}
