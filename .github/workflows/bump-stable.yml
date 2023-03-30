@@ -36,7 +36,7 @@ jobs:
         run: |
           artifacts=$(
             curl -sS --fail "https://builds.r2.relay.so/$TAG_NAME/artifacts.json" \
-            | jq '.[] | select(. | contains("darwin"))'
+            | jq -r '.[] | select(. | contains("darwin"))'
           )
 
           for artifact in $artifacts; do
