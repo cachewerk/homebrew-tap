@@ -27,6 +27,8 @@ jobs:
         with:
           route: GET /repos/cachewerk/relay/releases/tags/{tag_name}
           tag_name: ${{ github.event.client_payload.tag }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Download release assets
         env:
