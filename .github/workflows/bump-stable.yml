@@ -24,11 +24,11 @@ jobs:
 
       - name: Fetch public release
         uses: octokit/request-action@v2.x
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           route: GET /repos/cachewerk/relay/releases/tags/{tag_name}
           tag_name: ${{ github.event.client_payload.tag }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Download release assets
         env:
@@ -84,6 +84,8 @@ jobs:
 
       - name: Open pull request
         uses: octokit/request-action@v2.x
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           route: POST /repos/cachewerk/homebrew-tap/pulls
           base: main
