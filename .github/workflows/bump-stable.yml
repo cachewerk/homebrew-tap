@@ -36,13 +36,12 @@ jobs:
         run: |
           artifacts=$(
             curl -sS --fail "https://builds.r2.relay.so/$TAG_NAME/artifacts.json" \
-            | jq -r '.[] | select(.os == "darwin")'
+            | jq -r '.[] | select(.os == "darwin") | .url'
           )
 
           for artifact in $artifacts; do
-            URL="https://builds.r2.relay.so/$TAG_NAME/$artifact"
-            echo "Downloading $artifact from $URL"
-            curl -sS --fail -o $artifact --location $URL
+            echo "Downloading $artifact"
+            curl -sS --fail -o $(basename $artifact) --location $artifact
           done
 
       - name: Update formula
