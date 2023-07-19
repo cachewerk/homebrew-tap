@@ -4,20 +4,18 @@ class RelayAT74 < Formula
   desc "Next-generation caching layer for PHP"
   homepage "https://relay.so"
 
-  keg_only :versioned_formula
-
   stable do
-    url "https://github.com/cachewerk/relay.git", tag: "v0.6.5"
+    url "https://github.com/cachewerk/relay.git", tag: "v0.6.6"
 
     resource "ext-relay" do
       if Hardware::CPU.arm?
         # stable: php7.4-darwin-arm64
-        url "https://builds.r2.relay.so/v0.6.5/relay-v0.6.5-php7.4-darwin-arm64.tar.gz"
-        sha256 "a8adc13ac597d8521ebd96d284e7fe7d1e290caf7dd2944be8d95b9ea22a34de"
+        url "https://builds.r2.relay.so/v0.6.6/relay-v0.6.6-php7.4-darwin-arm64.tar.gz"
+        sha256 "1570fe6577f8d4c84970a798b5ef6a464f49954464c9f19cba5cb6ad9f10cd39"
       else
         # stable: php7.4-darwin-x86-64
-        url "https://builds.r2.relay.so/v0.6.5/relay-v0.6.5-php7.4-darwin-x86-64.tar.gz"
-        sha256 "ccf1b42a55579cba9ad30cc9a75d221a2f3ff9f8f628e84248be8643957a3fd8"
+        url "https://builds.r2.relay.so/v0.6.6/relay-v0.6.6-php7.4-darwin-x86-64.tar.gz"
+        sha256 "9b989f8fb7cf4fbda89d2475f5dad189d17d58c37311a553571511a46241a95a"
       end
     end
   end
@@ -35,6 +33,8 @@ class RelayAT74 < Formula
       end
     end
   end
+
+  keg_only :versioned_formula
 
   depends_on "concurrencykit"
   depends_on "hiredis"

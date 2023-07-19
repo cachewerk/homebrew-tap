@@ -4,20 +4,18 @@ class RelayAT80 < Formula
   desc "Next-generation caching layer for PHP"
   homepage "https://relay.so"
 
-  keg_only :versioned_formula
-
   stable do
-    url "https://github.com/cachewerk/relay.git", tag: "v0.6.5"
+    url "https://github.com/cachewerk/relay.git", tag: "v0.6.6"
 
     resource "ext-relay" do
       if Hardware::CPU.arm?
         # stable: php8.0-darwin-arm64
-        url "https://builds.r2.relay.so/v0.6.5/relay-v0.6.5-php8.0-darwin-arm64.tar.gz"
-        sha256 "bacf5c2cc80b03ac58520579d87d737801e1c52168fe99b32a86392294a80679"
+        url "https://builds.r2.relay.so/v0.6.6/relay-v0.6.6-php8.0-darwin-arm64.tar.gz"
+        sha256 "18e7da2192f256c826619d33df347b82a6e3406467f27e0c2ecd8d4539afeefd"
       else
         # stable: php8.0-darwin-x86-64
-        url "https://builds.r2.relay.so/v0.6.5/relay-v0.6.5-php8.0-darwin-x86-64.tar.gz"
-        sha256 "35137f254f5a610d2242a9a941c0fbfd1d129d4447a427ac2663297b57903599"
+        url "https://builds.r2.relay.so/v0.6.6/relay-v0.6.6-php8.0-darwin-x86-64.tar.gz"
+        sha256 "27e1fe465ebfce03a5b5bf8a22a4c5a07b82d3e3b8b067ebc8edb8da8cfbb3ac"
       end
     end
   end
@@ -35,6 +33,8 @@ class RelayAT80 < Formula
       end
     end
   end
+
+  keg_only :versioned_formula
 
   depends_on "concurrencykit"
   depends_on "hiredis"
