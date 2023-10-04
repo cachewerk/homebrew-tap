@@ -60,6 +60,7 @@ class RelayAT80 < Formula
     end
 
     resource("ext-relay").stage do
+      mv "relay-pkg.so", "relay.so" if Hardware::CPU.arm?
       chmod 0644, "relay.so"
 
       # inject UUID into binary
@@ -69,8 +70,8 @@ class RelayAT80 < Formula
       # relink dependencies
       dylibs = MachO::Tools.dylibs("relay.so")
 
-      MachO::Tools.change_install_name("relay.so", dylibs.grep(/libhiredis./).first, (Formula["hiredis"].opt_lib/"libhiredis.dylib").to_s)
-      MachO::Tools.change_install_name("relay.so", dylibs.grep(/libhiredis_ssl./).first, (Formula["hiredis"].opt_lib/"libhiredis_ssl.dylib").to_s)
+      MachO::Tools.change_install_name("relay.so", dylibs.grep(/libhiredis\./).first, (Formula["hiredis"].opt_lib/"libhiredis.dylib").to_s)
+      MachO::Tools.change_install_name("relay.so", dylibs.grep(/libhiredis_ssl\./).first, (Formula["hiredis"].opt_lib/"libhiredis_ssl.dylib").to_s)
 
       MachO::Tools.change_install_name("relay.so", dylibs.grep(/libssl/).first, (Formula["openssl"].opt_lib/"libssl.dylib").to_s)
       MachO::Tools.change_install_name("relay.so", dylibs.grep(/libcrypto/).first, (Formula["openssl"].opt_lib/"libcrypto.dylib").to_s)
