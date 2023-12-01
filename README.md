@@ -9,9 +9,8 @@ brew tap cachewerk/tap
 Next, determine your PHP version using `php -v` and install the matching extension:
 
 ```bash
-brew install relay      # PHP 8.2
-brew install relay@8.1  # PHP 8.1
-brew install relay@8.0  # PHP 8.0
+brew install relay      # PHP 8.3
+brew install relay@8.2  # PHP 8.2
 brew install relay@7.4  # PHP 7.4
 ```
 
