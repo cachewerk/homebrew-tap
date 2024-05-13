@@ -39,7 +39,6 @@ class RelayAT74 < Formula
   depends_on "concurrencykit"
   depends_on "hiredis"
   depends_on "lz4"
-  depends_on "openssl@3.0"
   depends_on "php@7.4"
   depends_on "zstd"
 
@@ -60,12 +59,10 @@ class RelayAT74 < Formula
     end
 
     resource("ext-relay").stage do
-      mv "relay-pkg.so", "relay.so" if Hardware::CPU.arm?
       chmod 0644, "relay.so"
 
       # inject UUID into binary
       `LC_ALL=C /usr/bin/sed -i '' s/00000000-0000-0000-0000-000000000000/#{SecureRandom.uuid}/ relay.so`
-      `LC_ALL=C /usr/bin/sed -i '' s/BIN:31415926-5358-9793-2384-626433832795/BIN:#{SecureRandom.uuid}/ relay.so`
 
       # relink dependencies
       dylibs = MachO::Tools.dylibs("relay.so")
