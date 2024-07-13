@@ -10,14 +10,14 @@ jobs:
   bump-relay-stable:
 
     name: Bump stable formula
-    runs-on: macos-11.0
+    runs-on: macos-14
 
     if: github.event.action == 'bump-relay-stable'
 
     steps:
 
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install GNU sed
         run: brew install gnu-sed
