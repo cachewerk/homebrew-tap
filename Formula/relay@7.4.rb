@@ -5,7 +5,7 @@ class RelayAT74 < Formula
   homepage "https://relay.so"
 
   stable do
-    url "https://github.com/cachewerk/relay.git", tag: "v0.8.1"
+    url "https://github.com/cachewerk/relay.git", tag: "v0.9.0"
 
     resource "ext-relay" do
       if Hardware::CPU.arm?
