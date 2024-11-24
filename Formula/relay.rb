@@ -9,12 +9,12 @@ class Relay < Formula
 
     resource "ext-relay" do
       if Hardware::CPU.arm?
-        # stable: php8.3-darwin-arm64
-        url "https://builds.r2.relay.so/v0.9.0/relay-v0.9.0-php8.3-darwin-arm64.tar.gz"
+        # stable: php8.4-darwin-arm64
+        url "https://builds.r2.relay.so/v0.9.0/relay-v0.9.0-php8.4-darwin-arm64.tar.gz"
         sha256 "6101303c3e209d43b16eae2250234615268d917f18628aa44dd963af43800cf4"
       else
-        # stable: php8.3-darwin-x86-64
-        url "https://builds.r2.relay.so/v0.7.0/relay-v0.7.0-php8.3-darwin-x86-64.tar.gz"
+        # stable: php8.4-darwin-x86-64
+        url "https://builds.r2.relay.so/v0.9.0/relay-v0.7.0-php8.4-darwin-x86-64.tar.gz"
         sha256 "bd94daaeb6aea3b53624b397502c26bb687ebc1b566699b4437f4a92e2f25606"
       end
     end
@@ -25,11 +25,11 @@ class Relay < Formula
 
     resource "ext-relay" do
       if Hardware::CPU.arm?
-        # head: php8.3-darwin-arm64
-        url "https://builds.r2.relay.so/dev/relay-dev-php8.3-darwin-arm64.tar.gz"
+        # head: php8.4-darwin-arm64
+        url "https://builds.r2.relay.so/dev/relay-dev-php8.4-darwin-arm64.tar.gz"
       else
-        # head: php8.3-darwin-x86-64
-        url "https://builds.r2.relay.so/dev/relay-dev-php8.3-darwin-x86-64.tar.gz"
+        # head: php8.4-darwin-x86-64
+        url "https://builds.r2.relay.so/dev/relay-dev-php8.4-darwin-x86-64.tar.gz"
       end
     end
   end

@@ -1,6 +1,6 @@
 require "securerandom"
 
-class RelayAT74 < Formula
+class RelayAT83 < Formula
   desc "Next-generation caching layer for PHP"
   homepage "https://relay.so"
 
@@ -9,13 +9,13 @@ class RelayAT74 < Formula
 
     resource "ext-relay" do
       if Hardware::CPU.arm?
-        # stable: php7.4-darwin-arm64
-        url "https://builds.r2.relay.so/v0.7.0/relay-v0.7.0-php7.4-darwin-arm64.tar.gz"
-        sha256 "f682f2162965d47a7a6a8c7cc3c8dcb855f4df0dc729b0662e6bef73bbc50fd4"
+        # stable: php8.3-darwin-arm64
+        url "https://builds.r2.relay.so/v0.9.0/relay-v0.9.0-php8.3-darwin-arm64.tar.gz"
+        sha256 "6101303c3e209d43b16eae2250234615268d917f18628aa44dd963af43800cf4"
       else
-        # stable: php7.4-darwin-x86-64
-        url "https://builds.r2.relay.so/v0.7.0/relay-v0.7.0-php7.4-darwin-x86-64.tar.gz"
-        sha256 "15cc2a2014c330846a6a14445d678e533ff94f3fd1db655074af14c707aa7fdc"
+        # stable: php8.3-darwin-x86-64
+        url "https://builds.r2.relay.so/v0.7.0/relay-v0.7.0-php8.3-darwin-x86-64.tar.gz"
+        sha256 "bd94daaeb6aea3b53624b397502c26bb687ebc1b566699b4437f4a92e2f25606"
       end
     end
   end
@@ -25,11 +25,11 @@ class RelayAT74 < Formula
 
     resource "ext-relay" do
       if Hardware::CPU.arm?
-        # head: php7.4-darwin-arm64
-        url "https://builds.r2.relay.so/dev/relay-dev-php7.4-darwin-arm64.tar.gz"
+        # head: php8.3-darwin-arm64
+        url "https://builds.r2.relay.so/dev/relay-dev-php8.3-darwin-arm64.tar.gz"
       else
-        # head: php7.4-darwin-x86-64
-        url "https://builds.r2.relay.so/dev/relay-dev-php7.4-darwin-x86-64.tar.gz"
+        # head: php8.3-darwin-x86-64
+        url "https://builds.r2.relay.so/dev/relay-dev-php8.3-darwin-x86-64.tar.gz"
       end
     end
   end
@@ -39,16 +39,16 @@ class RelayAT74 < Formula
   depends_on "concurrencykit"
   depends_on "hiredis"
   depends_on "lz4"
-  depends_on "php@7.4"
+  depends_on "php@8.3"
   depends_on "zstd"
 
   def conf_dir
-    Pathname(Utils.safe_popen_read(Formula["php@7.4"].opt_bin/"php-config", "--ini-dir").chomp)
+    Pathname(Utils.safe_popen_read(Formula["php@8.3"].opt_bin/"php-config", "--ini-dir").chomp)
   end
 
   def install
-    php = (Formula["php@7.4"].opt_bin/"php").to_s
-    pecl = (Formula["php@7.4"].opt_bin/"pecl").to_s
+    php = (Formula["php@8.3"].opt_bin/"php").to_s
+    pecl = (Formula["php@8.3"].opt_bin/"pecl").to_s
 
     extensions = Utils.safe_popen_read(php, "-m")
 
@@ -90,13 +90,13 @@ class RelayAT74 < Formula
       inreplace "relay.ini", "extension = relay.so", "extension = #{lib}/relay.so"
 
       # install ini file to `etc/` (won't overwrite)
-      (etc/"relay").install "relay.ini" => "relay@7.4.ini"
+      (etc/"relay").install "relay.ini" => "relay@8.3.ini"
 
       # upsert absolute path to extension if `relay.ini` already existed
-      inreplace etc/"relay/relay@7.4.ini", /extension\s*=.+$/, "extension = #{lib}/relay.so"
+      inreplace etc/"relay/relay@8.3.ini", /extension\s*=.+$/, "extension = #{lib}/relay.so"
 
       # create ini soft link if necessary
-      ln_s etc/"relay/relay@7.4.ini", conf_dir/"ext-relay.ini" unless (conf_dir/"ext-relay.ini").exist?
+      ln_s etc/"relay/relay@8.3.ini", conf_dir/"ext-relay.ini" unless (conf_dir/"ext-relay.ini").exist?
     end
   end
 
@@ -111,7 +111,7 @@ class RelayAT74 < Formula
       Run `\033[32mphp --ri relay\033[0m` to ensure Relay is working.
 
       Finally, be sure to restart your PHP-FPM service:
-        `\033[32mbrew services restart php@7.4\033[0m`
+        `\033[32mbrew services restart php@8.3\033[0m`
     EOS
   end
 end
