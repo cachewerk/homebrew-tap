@@ -31,8 +31,8 @@ sudo brew services restart nginx
 ## Links
 
 - [Documentation](https://relay.so/docs)
-- [Twitter](https://twitter.com/RelayPHP)
 - [Discussions](https://github.com/cachewerk/relay/discussions)
+- [Bluesky](https://bsky.app/profile/relay.so)
 
 ## Uninstall
 
