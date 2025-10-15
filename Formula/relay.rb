@@ -5,13 +5,13 @@ class Relay < Formula
   homepage "https://relay.so"
 
   stable do
-    url "https://github.com/cachewerk/relay.git", tag: "v0.12.0"
+    url "https://github.com/cachewerk/relay.git", tag: "v0.12.1"
 
     resource "ext-relay" do
       if Hardware::CPU.arm?
         # stable: php8.4-darwin-arm64
-        url "https://builds.r2.relay.so/v0.12.0/relay-v0.12.0-php8.4-darwin-arm64.tar.gz"
-        sha256 "cbbeab2020f2ac0fe8811c4afb80b726f278721d5f34b06b634d73326725767c"
+        url "https://builds.r2.relay.so/v0.12.1/relay-v0.12.1-php8.4-darwin-arm64.tar.gz"
+        sha256 "3039f8f4bb97311eba4e34cb74a62874f4b26b7ee6ecb1194802518ba87e7d34"
       else
         # stable: php8.4-darwin-x86-64
         url "https://builds.r2.relay.so/v0.9.0/relay-v0.7.0-php8.4-darwin-x86-64.tar.gz"
