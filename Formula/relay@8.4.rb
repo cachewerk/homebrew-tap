@@ -1,6 +1,6 @@
 require "securerandom"
 
-class Relay < Formula
+class RelayAT84 < Formula
   desc "Next-generation caching layer for PHP"
   homepage "https://relay.so"
 
@@ -9,12 +9,12 @@ class Relay < Formula
 
     resource "ext-relay" do
       if Hardware::CPU.arm?
-        # stable: php8.5-darwin-arm64
-        url "https://builds.r2.relay.so/v0.12.1/relay-v0.12.1-php8.5-darwin-arm64.tar.gz"
+        # stable: php8.4-darwin-arm64
+        url "https://builds.r2.relay.so/v0.12.1/relay-v0.12.1-php8.4-darwin-arm64.tar.gz"
         sha256 "3039f8f4bb97311eba4e34cb74a62874f4b26b7ee6ecb1194802518ba87e7d34"
       else
-        # stable: php8.5-darwin-x86-64
-        url "https://builds.r2.relay.so/v0.9.0/relay-v0.7.0-php8.5-darwin-x86-64.tar.gz"
+        # stable: php8.4-darwin-x86-64
+        url "https://builds.r2.relay.so/v0.9.0/relay-v0.7.0-php8.4-darwin-x86-64.tar.gz"
         sha256 "bd94daaeb6aea3b53624b397502c26bb687ebc1b566699b4437f4a92e2f25606"
       end
     end
@@ -25,11 +25,11 @@ class Relay < Formula
 
     resource "ext-relay" do
       if Hardware::CPU.arm?
-        # head: php8.5-darwin-arm64
-        url "https://builds.r2.relay.so/dev/relay-dev-php8.5-darwin-arm64.tar.gz"
+        # head: php8.4-darwin-arm64
+        url "https://builds.r2.relay.so/dev/relay-dev-php8.4-darwin-arm64.tar.gz"
       else
-        # head: php8.5-darwin-x86-64
-        url "https://builds.r2.relay.so/dev/relay-dev-php8.5-darwin-x86-64.tar.gz"
+        # head: php8.4-darwin-x86-64
+        url "https://builds.r2.relay.so/dev/relay-dev-php8.4-darwin-x86-64.tar.gz"
       end
     end
   end
