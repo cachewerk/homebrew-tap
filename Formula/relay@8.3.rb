@@ -96,6 +96,7 @@ class RelayAT83 < Formula
       inreplace etc/"relay/relay@8.3.ini", /extension\s*=.+$/, "extension = #{lib}/relay.so"
 
       # create ini soft link if necessary
+      conf_dir.mkdir unless conf_dir.exist?
       ln_s etc/"relay/relay@8.3.ini", conf_dir/"ext-relay.ini" unless (conf_dir/"ext-relay.ini").exist?
     end
   end
