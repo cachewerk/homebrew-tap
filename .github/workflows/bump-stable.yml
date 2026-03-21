@@ -17,13 +17,13 @@ jobs:
     steps:
 
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Install GNU sed
         run: brew install gnu-sed
 
       - name: Fetch public release
-        uses: octokit/request-action@v2.x
+        uses: octokit/request-action@v3.x
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -82,7 +82,7 @@ jobs:
           git push -u origin $BRANCH
 
       - name: Open pull request
-        uses: octokit/request-action@v2.x
+        uses: octokit/request-action@v3.x
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
