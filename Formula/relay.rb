@@ -91,9 +91,15 @@ class Relay < Formula
       # upsert absolute path to extension if `relay.ini` already existed
       inreplace etc/"relay/relay.ini", /extension\s*=.+$/, "extension = #{lib}/relay.so"
 
-      # create ini soft link if necessary
+      # (re)create ini soft link, replacing any unexpected leftover
       conf_dir.mkdir unless conf_dir.exist?
-      ln_s etc/"relay/relay.ini", conf_dir/"ext-relay.ini" unless (conf_dir/"ext-relay.ini").exist?
+      target = etc/"relay/relay.ini"
+      link = conf_dir/"ext-relay.ini"
+      if link.symlink? || link.exist?
+        opoo "Replacing #{link}" unless link.symlink? && link.readlink == target
+        link.unlink
+      end
+      ln_s target, link
     end
   end
 
