@@ -23,12 +23,11 @@ jobs:
         run: brew install gnu-sed
 
       - name: Fetch public release
-        uses: octokit/request-action@v3.x
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          route: GET /repos/cachewerk/relay/releases/tags/{tag_name}
-          tag_name: ${{ github.event.client_payload.tag }}
+          TAG_NAME: ${{ github.event.client_payload.tag }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh api repos/cachewerk/relay/releases/tags/$TAG_NAME --silent
 
       - name: Download release assets
         env:
@@ -82,12 +81,17 @@ jobs:
           git push -u origin $BRANCH
 
       - name: Open pull request
-        uses: octokit/request-action@v3.x
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          route: POST /repos/cachewerk/homebrew-tap/pulls
-          base: main
-          head: pr/stable-${{ github.event.client_payload.tag }}
-          title: Relay ${{ github.event.client_payload.tag }}
-          body: See https://github.com/cachewerk/relay/releases/tag/${{ github.event.client_payload.tag }}
+          TAG_NAME: ${{ github.event.client_payload.tag }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          BRANCH=pr/stable-$TAG_NAME
+          TITLE="Relay $TAG_NAME"
+          BODY="See https://github.com/cachewerk/relay/releases/tag/$TAG_NAME"
+
+          if gh pr view "$BRANCH" --json number --jq '.number' > /dev/null 2>&1; then
+            echo "Pull request already exists for $BRANCH"
+            exit 0
+          fi
+
+          gh pr create --base main --head "$BRANCH" --title "$TITLE" --body "$BODY"
