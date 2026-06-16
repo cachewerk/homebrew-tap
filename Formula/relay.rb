@@ -96,7 +96,7 @@ class Relay < Formula
       target = etc/"relay/relay.ini"
       link = conf_dir/"ext-relay.ini"
       if link.symlink? || link.exist?
-        opoo "Replacing #{link}" unless link.symlink? && link.readlink == target
+        opoo "Replacing #{link}" if !link.symlink? || link.readlink != target
         link.unlink
       end
       ln_s target, link
