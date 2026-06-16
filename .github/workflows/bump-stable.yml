@@ -94,8 +94,4 @@ jobs:
             exit 0
           fi
 
-          gh pr create \
-            --base main \
-            --head "$BRANCH" \
-            --title "$TITLE" \
-            --body "$BODY"
+          gh pr create --base main --head "$BRANCH" --title "$TITLE" --body "$BODY"
