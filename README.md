@@ -7,11 +7,11 @@ brew install cachewerk/tap/relay      # PHP 8.5
 brew install cachewerk/tap/relay@7.4  # PHP 7.4
 ```
 
-The `igbinary` and `msgpack` PHP extensions are optional. They're only needed if you want to use Relay's igbinary or msgpack serializers, and Relay detects them at runtime — it loads and works fine without them. If you'd like to use those serializers, you can install the extensions using PECL:
+The `igbinary` and `msgpack` PHP extensions are optional, however using the `igbinary` serializer is recommended. Install the extensions using PECL:
 
 ```bash
-pecl install msgpack
 pecl install igbinary
+# pecl install msgpack
 ```
 
 After the installation is completed, be sure to restart your PHP-FPM and web server services:
