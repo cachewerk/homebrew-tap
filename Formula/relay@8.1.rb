@@ -109,9 +109,8 @@ class RelayAT81 < Formula
       The configuration file was symlinked to:
         #{conf_dir}/ext-relay.ini
 
-      The `igbinary` and `msgpack` extensions are optional. They're only needed
-      to use Relay's igbinary/msgpack serializers and are detected at runtime.
-      Install them if desired using `\033[32m#{pecl} install igbinary\033[0m` and `\033[32m#{pecl} install msgpack\033[0m`.
+      The `igbinary` (recommended) and `msgpack` extensions are optional.
+      Install them using `\033[32m#{pecl} install igbinary\033[0m`.
 
       Run `\033[32mphp --ri relay\033[0m` to ensure Relay is working.
 
