@@ -48,7 +48,7 @@ class RelayAT84 < Formula
     php = (Formula["php"].opt_bin/"php").to_s
     extensions = Utils.safe_popen_read(php, "-m")
 
-    ["json", "igbinary", "msgpack"].each do |name|
+    ["json"].each do |name|
       unless /^#{name}/.match?(extensions)
         raise "Relay requires the `#{name}` extension. Install it using `\033[32mpecl install #{name}\033[0m`."
       end
@@ -104,6 +104,9 @@ class RelayAT84 < Formula
 
       The configuration file was symlinked to:
         #{conf_dir}/ext-relay.ini
+
+      The `igbinary` (recommended) and `msgpack` extensions are optional.
+      Install them using `\033[32mpecl install igbinary\033[0m`.
 
       Run `\033[32mphp --ri relay\033[0m` to ensure Relay is working.
 

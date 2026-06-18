@@ -7,11 +7,11 @@ brew install cachewerk/tap/relay      # PHP 8.5
 brew install cachewerk/tap/relay@7.4  # PHP 7.4
 ```
 
-The installation might abort and you'll be prompted to install some PHP extensions that Relay requires. You can install them using PECL:
+The `igbinary` and `msgpack` PHP extensions are optional, however using the `igbinary` serializer is recommended. Install the extensions using PECL:
 
 ```bash
-pecl install msgpack
 pecl install igbinary
+# pecl install msgpack
 ```
 
 After the installation is completed, be sure to restart your PHP-FPM and web server services:
