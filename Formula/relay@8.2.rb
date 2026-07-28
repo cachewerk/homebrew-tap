@@ -67,17 +67,17 @@ class RelayAT82 < Formula
       # relink dependencies
       dylibs = MachO::Tools.dylibs("relay.so")
 
-      MachO::Tools.change_install_name("relay.so", dylibs.grep(/libhiredis\./).first, (formula_opt_lib("hiredis")/"libhiredis.dylib").to_s)
-      MachO::Tools.change_install_name("relay.so", dylibs.grep(/libhiredis_ssl\./).first, (formula_opt_lib("hiredis")/"libhiredis_ssl.dylib").to_s)
-
-      MachO::Tools.change_install_name("relay.so", dylibs.grep(/libssl/).first, (formula_opt_lib("openssl")/"libssl.dylib").to_s)
-      MachO::Tools.change_install_name("relay.so", dylibs.grep(/libcrypto/).first, (formula_opt_lib("openssl")/"libcrypto.dylib").to_s)
-
-      MachO::Tools.change_install_name("relay.so", dylibs.grep(/libzstd/).first, (formula_opt_lib("zstd")/"libzstd.dylib").to_s)
-      MachO::Tools.change_install_name("relay.so", dylibs.grep(/liblz4/).first, (formula_opt_lib("lz4")/"liblz4.dylib").to_s)
-
-      if Hardware::CPU.intel?
-        MachO::Tools.change_install_name("relay.so", dylibs.grep(/libck/).first, (formula_opt_lib("ck")/"libck.dylib").to_s)
+      {
+        /libhiredis\./     => formula_opt_lib("hiredis")/"libhiredis.dylib",
+        /libhiredis_ssl\./ => formula_opt_lib("hiredis")/"libhiredis_ssl.dylib",
+        /libssl/           => formula_opt_lib("openssl")/"libssl.dylib",
+        /libcrypto/        => formula_opt_lib("openssl")/"libcrypto.dylib",
+        /libzstd/          => formula_opt_lib("zstd")/"libzstd.dylib",
+        /liblz4/           => formula_opt_lib("lz4")/"liblz4.dylib",
+        /libck/            => formula_opt_lib("ck")/"libck.dylib",
+      }.each do |pattern, new_name|
+        old_name = dylibs.grep(pattern).first
+        MachO::Tools.change_install_name("relay.so", old_name, new_name.to_s) if old_name
       end
 
       # Apply ad-hoc code signature
