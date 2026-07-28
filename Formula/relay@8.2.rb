@@ -5,13 +5,13 @@ class RelayAT82 < Formula
   homepage "https://relay.so"
 
   stable do
-    url "https://github.com/cachewerk/relay.git", tag: "v0.30.0"
+    url "https://github.com/cachewerk/relay.git", tag: "v0.40.0"
 
     resource "ext-relay" do
       if Hardware::CPU.arm?
         # stable: php8.2-darwin-arm64
-        url "https://builds.r2.relay.so/v0.30.0/relay-v0.30.0-php8.2-darwin-arm64.tar.gz"
-        sha256 "585ac9d3e82e9f5aacefbb3751115385afed640f2049eaa518b4f6eadc278e4a"
+        url "https://builds.r2.relay.so/v0.40.0/relay-v0.40.0-php8.2-darwin-arm64.tar.gz"
+        sha256 "21ea0e6159e9d2c583f96c3f77c0f00de9aa5efffa9de116137836b711c4b848"
       else
         # stable: php8.2-darwin-x86-64
         url "https://builds.r2.relay.so/v0.7.0/relay-v0.7.0-php8.2-darwin-x86-64.tar.gz"
@@ -43,12 +43,12 @@ class RelayAT82 < Formula
   depends_on "zstd"
 
   def conf_dir
-    Pathname(Utils.safe_popen_read(Formula["php@8.2"].opt_bin/"php-config", "--ini-dir").chomp)
+    Pathname(Utils.safe_popen_read(formula_opt_bin("php@8.2")/"php-config", "--ini-dir").chomp)
   end
 
   def install
-    php = (Formula["php@8.2"].opt_bin/"php").to_s
-    pecl = (Formula["php@8.2"].opt_bin/"pecl").to_s
+    php = (formula_opt_bin("php@8.2")/"php").to_s
+    pecl = (formula_opt_bin("php@8.2")/"pecl").to_s
 
     extensions = Utils.safe_popen_read(php, "-m")
 
@@ -67,17 +67,17 @@ class RelayAT82 < Formula
       # relink dependencies
       dylibs = MachO::Tools.dylibs("relay.so")
 
-      MachO::Tools.change_install_name("relay.so", dylibs.grep(/libhiredis\./).first, (Formula["hiredis"].opt_lib/"libhiredis.dylib").to_s)
-      MachO::Tools.change_install_name("relay.so", dylibs.grep(/libhiredis_ssl\./).first, (Formula["hiredis"].opt_lib/"libhiredis_ssl.dylib").to_s)
+      MachO::Tools.change_install_name("relay.so", dylibs.grep(/libhiredis\./).first, (formula_opt_lib("hiredis")/"libhiredis.dylib").to_s)
+      MachO::Tools.change_install_name("relay.so", dylibs.grep(/libhiredis_ssl\./).first, (formula_opt_lib("hiredis")/"libhiredis_ssl.dylib").to_s)
 
-      MachO::Tools.change_install_name("relay.so", dylibs.grep(/libssl/).first, (Formula["openssl"].opt_lib/"libssl.dylib").to_s)
-      MachO::Tools.change_install_name("relay.so", dylibs.grep(/libcrypto/).first, (Formula["openssl"].opt_lib/"libcrypto.dylib").to_s)
+      MachO::Tools.change_install_name("relay.so", dylibs.grep(/libssl/).first, (formula_opt_lib("openssl")/"libssl.dylib").to_s)
+      MachO::Tools.change_install_name("relay.so", dylibs.grep(/libcrypto/).first, (formula_opt_lib("openssl")/"libcrypto.dylib").to_s)
 
-      MachO::Tools.change_install_name("relay.so", dylibs.grep(/libzstd/).first, (Formula["zstd"].opt_lib/"libzstd.dylib").to_s)
-      MachO::Tools.change_install_name("relay.so", dylibs.grep(/liblz4/).first, (Formula["lz4"].opt_lib/"liblz4.dylib").to_s)
+      MachO::Tools.change_install_name("relay.so", dylibs.grep(/libzstd/).first, (formula_opt_lib("zstd")/"libzstd.dylib").to_s)
+      MachO::Tools.change_install_name("relay.so", dylibs.grep(/liblz4/).first, (formula_opt_lib("lz4")/"liblz4.dylib").to_s)
 
       if Hardware::CPU.intel?
-        MachO::Tools.change_install_name("relay.so", dylibs.grep(/libck/).first, (Formula["ck"].opt_lib/"libck.dylib").to_s)
+        MachO::Tools.change_install_name("relay.so", dylibs.grep(/libck/).first, (formula_opt_lib("ck")/"libck.dylib").to_s)
       end
 
       # Apply ad-hoc code signature
