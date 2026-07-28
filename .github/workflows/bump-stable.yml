@@ -35,7 +35,7 @@ jobs:
         run: |
           artifacts=$(
             curl -sS --fail "https://builds.r2.relay.so/$TAG_NAME/artifacts.json" \
-            | jq -r '.[] | select(.os == "darwin") | .url'
+            | jq -r '.[] | select(.os == "darwin" and .arch == "arm64") | .url'
           )
 
           for artifact in $artifacts; do
@@ -54,9 +54,9 @@ jobs:
             MARKER=$(echo $f | cut -d - -f 3- | gsed 's/.tar.gz//')
             URL="https://builds.r2.relay.so/$TAG_NAME/$f"
             echo "Setting URL for stable $MARKER marker to $URL"
-            gsed -i "/.*# stable: $MARKER/!b;n;c\ \ \ \ \ \ \ \ url \"$URL\"" Formula/*.rb
+            gsed -i "/.*# stable: $MARKER/!b;n;c\ \ \ \ \ \ url \"$URL\"" Formula/*.rb
             echo "Setting checksum for stable $MARKER marker to $HASH"
-            gsed -i "/.*# stable: $MARKER/!b;n;n;c\ \ \ \ \ \ \ \ sha256 \"$HASH\"" Formula/*.rb
+            gsed -i "/.*# stable: $MARKER/!b;n;n;c\ \ \ \ \ \ sha256 \"$HASH\"" Formula/*.rb
           done
 
       - name: Check formula style
