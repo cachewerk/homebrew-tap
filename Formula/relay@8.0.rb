@@ -8,15 +8,9 @@ class RelayAT80 < Formula
     url "https://github.com/cachewerk/relay.git", tag: "v0.50.2"
 
     resource "ext-relay" do
-      if Hardware::CPU.arm?
-        # stable: php8.0-darwin-arm64
-        url "https://builds.r2.relay.so/v0.50.2/relay-v0.50.2-php8.0-darwin-arm64.tar.gz"
-        sha256 "77b452651368f3df76654b1427143f711c8a051945ed699dba3cb00cac1a8754"
-      else
-        # stable: php8.0-darwin-x86-64
-        url "https://builds.r2.relay.so/v0.7.0/relay-v0.7.0-php8.0-darwin-x86-64.tar.gz"
-        sha256 "addde9b76376d9b1786bc38ec24b08eca26347dd48a311f09372dc2ae1d2a55d"
-      end
+      # stable: php8.0-darwin-arm64
+      url "https://builds.r2.relay.so/v0.50.2/relay-v0.50.2-php8.0-darwin-arm64.tar.gz"
+      sha256 "77b452651368f3df76654b1427143f711c8a051945ed699dba3cb00cac1a8754"
     end
   end
 
@@ -24,18 +18,14 @@ class RelayAT80 < Formula
     url "https://github.com/cachewerk/relay.git", branch: "main"
 
     resource "ext-relay" do
-      if Hardware::CPU.arm?
-        # head: php8.0-darwin-arm64
-        url "https://builds.r2.relay.so/dev/relay-dev-php8.0-darwin-arm64.tar.gz"
-      else
-        # head: php8.0-darwin-x86-64
-        url "https://builds.r2.relay.so/dev/relay-dev-php8.0-darwin-x86-64.tar.gz"
-      end
+      # head: php8.0-darwin-arm64
+      url "https://builds.r2.relay.so/dev/relay-dev-php8.0-darwin-arm64.tar.gz"
     end
   end
 
   keg_only :versioned_formula
 
+  depends_on arch: :arm64
   depends_on "concurrencykit"
   depends_on "hiredis"
   depends_on "lz4"
@@ -81,7 +71,7 @@ class RelayAT80 < Formula
       end
 
       # Apply ad-hoc code signature
-      MachO.codesign!("relay.so") if Hardware::CPU.arm?
+      MachO.codesign!("relay.so")
 
       # move extension file
       lib.install "relay.so"
