@@ -10,7 +10,7 @@ jobs:
   bump-relay-stable:
 
     name: Bump stable formula
-    runs-on: macos-14
+    runs-on: macos-latest
 
     if: github.event.action == 'bump-relay-stable'
 
