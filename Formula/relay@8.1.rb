@@ -29,7 +29,6 @@ class RelayAT81 < Formula
   depends_on "concurrencykit"
   depends_on "hiredis"
   depends_on "lz4"
-  depends_on "openssl@3"
   depends_on "php@8.1"
   depends_on "zstd"
 
@@ -61,8 +60,8 @@ class RelayAT81 < Formula
       {
         /libhiredis\./     => formula_opt_lib("hiredis")/"libhiredis.dylib",
         /libhiredis_ssl\./ => formula_opt_lib("hiredis")/"libhiredis_ssl.dylib",
-        /libssl/           => formula_opt_lib("openssl@3")/"libssl.dylib",
-        /libcrypto/        => formula_opt_lib("openssl@3")/"libcrypto.dylib",
+        /libssl/           => formula_opt_lib("openssl")/"libssl.dylib",
+        /libcrypto/        => formula_opt_lib("openssl")/"libcrypto.dylib",
         /libzstd/          => formula_opt_lib("zstd")/"libzstd.dylib",
         /liblz4/           => formula_opt_lib("lz4")/"liblz4.dylib",
         /libck/            => formula_opt_lib("ck")/"libck.dylib",
