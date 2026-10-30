@@ -5,12 +5,12 @@ class RelayAT82 < Formula
   homepage "https://relay.so"
 
   stable do
-    url "https://github.com/cachewerk/relay.git", tag: "v0.60.0"
+    url "https://github.com/cachewerk/relay.git", tag: "v0.61.0"
 
     resource "ext-relay" do
       # stable: php8.2-darwin-arm64
-      url "https://builds.r2.relay.so/v0.60.0/relay-v0.60.0-php8.2-darwin-arm64.tar.gz"
-      sha256 "fde346b24fd70a98e3b3e30b37c42e80cac7384555999448256fc67a17dca7b8"
+      url "https://builds.r2.relay.so/v0.61.0/relay-v0.61.0-php8.2-darwin-arm64.tar.gz"
+      sha256 "b79a90e00576eced8c91bb8a46e4fc480ca64139e55c7120648ed139351cafa6"
     end
   end
 
