@@ -64,7 +64,7 @@ jobs:
           brew style \
             --fix \
             --display-cop-names \
-            --except-cops=FormulaAudit/Caveats,Layout/LineLength,FormulaAuditStrict/TestPresent \
+            --except-cops=FormulaAudit/Caveats,Layout/LineLength,FormulaAudit/Test \
             Formula/*.rb
 
       - name: Commit changes
